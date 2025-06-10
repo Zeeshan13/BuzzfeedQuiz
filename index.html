@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N2JZPNV27G"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N2JZPNV27G');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toxic Attraction Pattern Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .question-container,
+        .intro {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .demographic-section {
+            margin-bottom: 25px;
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+        }
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .question-container {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scenario {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .choice {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .choice.selected {
+            background: rgba(243, 156, 18, 0.2);
+            border-color: #f39c12;
+        }
+
+        .multi-select-info {
+            text-align: center;
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .personality-intro {
+            background: rgba(243, 156, 18, 0.1);
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .personality-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .warning-text {
+            font-size: 1.1em;
+            color: #f39c12;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .swipe-hint {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 20px;
+            font-size: 0.9em;
+            animation: fadeIn 1s ease-in 2s forwards;
+            opacity: 0;
+        }
+
+        .character-card:not(.flipped):hover .card-inner {
+            transform: translateY(-10px);
+            transition: transform 0.3s;
+        }
+
+        .character-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .character-card:hover {
+            z-index: 10;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .character-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        .character-card {
+            width: 350px;
+            height: 500px;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            animation: slideIn 0.6s ease-out forwards;
+            opacity: 0;
+            flex-shrink: 0;
+        }
+
+        .character-card:nth-child(1) { animation-delay: 0.3s; }
+        .character-card:nth-child(2) { animation-delay: 0.6s; }
+        .character-card:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .character-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            border: 2px solid rgba(243, 156, 18, 0.3);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #3a1a1a 0%, #2a0a0a 100%);
+            border: 2px solid rgba(231, 76, 60, 0.5);
+            transform: rotateY(180deg);
+        }
+
+        .match-percentage {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #f39c12;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .character-avatars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .avatar {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .attraction-text {
+            font-style: italic;
+            line-height: 1.6;
+            opacity: 0.9;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .click-to-flip {
+            background: rgba(243, 156, 18, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            margin-top: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .red-flags {
+            margin: 20px 0;
+        }
+
+        .red-flag {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.95em;
+        }
+
+        .red-flag strong {
+            color: #e74c3c;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .defense-tip {
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid rgba(46, 204, 113, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .defense-tip strong {
+            color: #2ecc71;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .scores {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .score-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .restart-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="intro-screen">
+            <h1>Swipe Right on Red Flags?</h1>
+            <div class="intro">
+                <p>If fictional villains had dating profiles, which ones would make your heart skip? Take a journey through romantic scenarios to discover your villain type—from charming manipulators to mysterious bad boys</p>
+                <p style="margin-top: 15px; opacity: 0.8;">Your choices will reveal more than you think...</p>
+            </div>
+            <button class="next-btn" onclick="startQuiz()">Begin Your Journey</button>
+        </div>
+
+        <div id="demographics-screen" style="display: none;">
+            <div class="question-container">
+                <h2 style="text-align: center; color: #f39c12; margin-bottom: 30px;">Tell Us About Yourself</h2>
+                <p style="text-align: center; opacity: 0.8; margin-bottom: 40px;">This helps us provide more personalized insights</p>
+                
+                <div class="demographic-section">
+                    <label style="display: block; margin-bottom: 15px; font-size: 1.1em;">What is your ethnicity?</label>
+                    <select id="ethnicity-select" style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: white; font-size: 1em;">
+                        <option value="">Select your ethnicity</option>
+                        <option value="asian">Asian</option>
+                        <option value="black">Black/African American</option>
+                        <option value="hispanic">Hispanic/Latino</option>
+                        <option value="white">White/Caucasian</option>
+                        <option value="middle-eastern">Middle Eastern</option>
+                        <option value="native">Native American</option>
+                        <option value="pacific-islander">Pacific Islander</option>
+                        <option value="mixed">Mixed/Multiple</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="demographic-section" style="margin-top: 30px;">
+                    <label style="display: block; margin-bottom: 15px; font-size: 1.1em;">What is your sexual orientation?</label>
+                    <select id="orientation-select" style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: white; font-size: 1em;">
+                        <option value="">Select your orientation</option>
+                        <option value="straight">Straight/Heterosexual</option>
+                        <option value="gay">Gay</option>
+                        <option value="lesbian">Lesbian</option>
+                        <option value="bisexual">Bisexual</option>
+                        <option value="pansexual">Pansexual</option>
+                        <option value="asexual">Asexual</option>
+                        <option value="queer">Queer</option>
+                        <option value="questioning">Questioning</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <button class="next-btn" onclick="startActualQuiz()" style="margin-top: 40px;">Continue to Quiz</button>
+            </div>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <div id="question-content"></div>
+        </div>
+
+        <div id="result-container" style="display: none;">
+            <div id="result-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data structure with complete questions
+        const questions = {
+            "1": {
+                scenario: "First you need to decide on your travel itinerary. How many days do you want your trip to be?",
+                choices: [
+                    { text: "Let's pick whatever number of days makes us both feel relaxed and connected.", next: "2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'll run the costs and schedules to choose the most efficient trip length.", next: "2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's go as long as our schedules allow—more days means more chances for spontaneous adventures.", next: "2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "2": {
+                scenario: "Now you need to decide on where to go. You have always wanted to visit Paris but your partner thinks London would be more fun.",
+                choices: [
+                    { text: "If London makes you happier, I'm good with it.", next: "3.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Paris makes more sense—better flights, lower costs, and amazing attractions.", next: "3.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "London just feels right to me—I love the idea of exploring somewhere unexpected.", next: "3.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "3.1": {
+                scenario: "You guys are going to London!! You are excited, But the night before the flight your partner told you work came up and they had to stay behind for another day.",
+                choices: [
+                    { text: "I'll cancel and rebook so we arrive together. I don't want to be in a new place alone.", next: "4.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'll compare rebooking fees; if it's too high, I'll go ahead today, check in, and you can join me tomorrow.", next: "4.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "This is actually great—more time to plan my day. I'll go today solo and explore until you arrive tomorrow.", next: "4.3", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "3.2": {
+                scenario: "You guys are going to Paris!! You are excited, But the night before the flight your partner told you work came up and they had to stay behind for another day.",
+                choices: [
+                    { text: "I don't want to experience a new city without you. Let me rebook so we can go together.", next: "4.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let me check the rebooking fees first. If they're reasonable, I'll wait. If not, I'll go ahead and you can join tomorrow.", next: "4.4", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Actually, this could be fun! I'll go explore on my own today and have stories to share when you arrive.", next: "4.4", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.1": {
+                scenario: "You canceled your flight and booked a hotel near the airport. It's late evening and your partner still hasn't replied to any texts all day.",
+                choices: [
+                    { text: "You pick up your phone again and text: 'Please let me know you're okay—I'm really worried.'", next: "5.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "You decide to leave the hotel for a bit—grab coffee at a nearby café and take photos of the city at night until they respond.", next: "5.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "They're probably still tied up with work. I'll confirm that everything on my end is in order and avoid reaching out until necessary.", next: "5.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.2": {
+                scenario: "You canceled your flight and booked a hotel near the airport. It's late evening and your partner still hasn't replied to any texts all day.",
+                choices: [
+                    { text: "You pick up your phone again and text: 'Please let me know you're okay—I'm really worried.'", next: "5.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "They're probably swamped with work. I'll explore the area and grab coffee until they respond.", next: "5.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Work emergencies happen. I'll double-check our new flight details and wait for them to reach out.", next: "5.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.3": {
+                scenario: "You arrive in London alone because your partner's flight was pushed to tomorrow. Your hotel room is booked; it's 10 AM and you have a free day.",
+                choices: [
+                    { text: "I'll go spend time in that beautiful café we always wanted to visit—and send you a photo so you feel part of it.", next: "5.3", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's stick to the plan and take that tour since I'm already here—no need to reinvent the day.", next: "5.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just wander around and see what catches my eye in this neighborhood.", next: "5.3", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.4": {
+                scenario: "You arrive in Paris alone because your partner's flight was pushed to tomorrow. Your hotel room is booked; it's 10 AM and you have a free day.",
+                choices: [
+                    { text: "I'll go spend time in that beautiful café we always wanted to visit—and send them a photo so they feel part of it.", next: "5.4", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's stick to the plan and take that tour since I'm already here—no need to reinvent the day.", next: "5.4", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just wander around and see what catches my eye in this neighborhood.", next: "5.4", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.1": {
+                scenario: "Later, your partner arrives at the hotel. 'Work has been crazy and I'm sorry for not replying to your texts all day,' they say.",
+                choices: [
+                    { text: "I was so worried! I felt completely ignored and it really hurt my feelings. I need you to understand how that made me feel.", next: "6.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I understand work gets hectic. Just send a quick 'busy today' text next time so I know what's happening.", next: "6.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "No worries! I ended up discovering some cool places on my own. Actually worked out pretty well - want to hear about it?", next: "6.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.2": {
+                scenario: "Later, your partner arrives at the hotel. 'Work has been crazy and I'm sorry for not replying to your texts all day,' they say.",
+                choices: [
+                    { text: "I was so worried! I felt completely ignored and it really hurt my feelings. I need you to understand how that made me feel.", next: "6.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I understand work gets hectic. Just send a quick 'busy today' text next time so I know what's happening.", next: "6.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "No worries! I ended up discovering some cool places on my own. Actually worked out pretty well - want to hear about it?", next: "6.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.3": {
+                scenario: "You're walking down a bustling London street when you see a street artist creating an incredible portrait—but your phone battery is at 5%.",
+                choices: [
+                    { text: "This is too amazing not to capture—I'll risk my phone dying for this moment.", next: "6.3", scores: { emotional: 0, logical: 0, exploratory: 2 } },
+                    { text: "I'll snap one quick photo, then save the rest of my battery.", next: "6.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just enjoy this without my phone—some moments are better experienced than photographed.", next: "6.3", scores: { emotional: 2, logical: 0, exploratory: 0 } }
+                ]
+            },
+            "5.4": {
+                scenario: "You're strolling down Rue Montorgueil when you hear a street musician playing something so moving you stop in your tracks—but your phone battery is at 5%.",
+                choices: [
+                    { text: "This is too amazing not to capture—I'll risk my phone dying for this moment.", next: "6.4", scores: { emotional: 0, logical: 1, exploratory: 1 } },
+                    { text: "I'll snap one quick photo, then save the rest of my battery.", next: "6.4", scores: { emotional: 1, logical: 1, exploratory: 0 } },
+                    { text: "I'll just enjoy this without my phone—some moments are better experienced than photographed.", next: "6.4", scores: { emotional: 1, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.1": {
+                scenario: "The next day, you and your partner flew in and checked into your hotel. Now you have a few hours before dinner. Pick exactly two of these to begin your day:",
+                multiSelect: 2,
+                choices: [
+                    { text: "Big Ben & Westminster - Visit the iconic landmark and learn its history", next: "7.1", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "London Eye - Share a romantic moment high above the Thames", next: "7.2", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pub in Covent Garden - Discover a secret local spot off the beaten path", next: "7.3", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.2": {
+                scenario: "The next day, you and your partner flew in and checked into your hotel. Now you have a few hours before dinner. Pick exactly two of these to begin your day:",
+                multiSelect: 2,
+                choices: [
+                    { text: "The Louvre - Explore world-famous art and masterpieces", next: "7.4", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "Eiffel Tower - Share a romantic view from Paris's most iconic spot", next: "7.5", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pâtisserie - Hunt down a secret bakery locals rave about", next: "7.6", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.3": {
+                scenario: "The next day, your partner arrives and you both check into your hotel. With a few hours to kill before dinner, you decide to explore. Pick exactly two activities to start your adventure:",
+                multiSelect: 2,
+                choices: [
+                    { text: "Big Ben & Westminster - Visit the iconic landmark and learn its history", next: "7.1", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "London Eye - Share a romantic moment high above the Thames", next: "7.2", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pub in Covent Garden - Discover a secret local spot off the beaten path", next: "7.3", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.4": {
+                scenario: "The next day, your partner arrives and you both check into your hotel. With a few hours to kill before dinner, you decide to explore. Pick exactly two activities to start your adventure:",
+                multiSelect: 2,
+                choices: [
+                    { text: "The Louvre - Explore world-famous art and masterpieces", next: "7.4", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "Eiffel Tower - Share a romantic view from Paris's most iconic spot", next: "7.5", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pâtisserie - Hunt down a secret bakery locals rave about", next: "7.6", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "7.1": {
+                scenario: "As you approach Big Ben, your partner suddenly feels overwhelmed by the crowd. They tug your arm and say, 'Can we leave? I can't focus like this.'",
+                choices: [
+                    { text: "I'd step aside with them and focus on how they're feeling before anything else.", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Sure, but let me grab one quick photo since we made it this far.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'd point toward the church and say, 'Let's try in there instead.'", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.2": {
+                scenario: "You're riding the London Eye just as the sun dips below the skyline. The capsule gently rotates, offering sweeping views over the Thames. Your partner's phone buzzes: it's a text from a friend who has extra tickets to a secret rooftop concert starting now.",
+                choices: [
+                    { text: "I've been dreaming of this ride—let's finish it. We can't bail now; I want us to share this moment.", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "We paid for this ride and have 20 minutes left. Let's finish, then maybe catch the concert after.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Secret concert? Way more exciting than this tourist trap! Let's go see what happens!", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.3": {
+                scenario: "After skipping the big landmarks, you and your partner are wandering side streets. A street performer invites you both to join their improv sketch in front of a small crowd.",
+                choices: [
+                    { text: "Oh my god, that sounds fun! Are you up for it? Let's do it!", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Hmm, let me just watch for a sec to see what we're getting into first.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Sure, why not? Let's see what happens!", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.4": {
+                scenario: "You're at the Louvre with only two hours before it closes. There are so many famous works to see, but you can't possibly visit everything. How do you decide what to prioritize?",
+                choices: [
+                    { text: "I really want to see the Mona Lisa—that's been on my bucket list forever!", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's pick the top 3 must-see sections and focus on those so we don't waste time.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's just wander and see what draws us in—we might discover something amazing.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.5": {
+                scenario: "Your partner wants to write a love note and lock it at the top of the Eiffel Tower. You're not sure.",
+                choices: [
+                    { text: "It might be cheesy, but it's meaningful to them—so I'd go for it.", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'd prefer snapping a great picture—something we'll actually keep and look at.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's write it but hide it somewhere unexpected up there—feels more fun and personal.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.6": {
+                scenario: "You and your partner discover a small, local pâtisserie filled with beautiful, unique pastries—You're overwhelmed by choice.",
+                choices: [
+                    { text: "I'll let my partner pick.", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Check reviews online—let's see what other people say about this place.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Ask the owner for their favorite—you're in adventure mode.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "9.1": {
+                scenario: "It's 8 PM in London and you're both starving. You arrive at a busy bistro—there's a 45-minute wait for a table. Your partner suggests grabbing something nearby instead.",
+                choices: [
+                    { text: "But this place looks so cozy and romantic! Can't we just wait? I really had my heart set on this.", next: "10.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "45 minutes is too long when we're this hungry. Let's find somewhere nearby - we'll eat sooner and avoid the crowd.", next: "10.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's wander and see what we discover! Maybe we'll find some hidden gem or street food we never would have tried otherwise.", next: "10.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "9.2": {
+                scenario: "It's 8 PM in Paris and you're both starving. You arrive at a busy bistro—there's a 45-minute wait for a table. Your partner suggests grabbing something nearby instead.",
+                choices: [
+                    { text: "But this place looks so cozy and romantic! Can't we just wait? I really had my heart set on this.", next: "10.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "45 minutes is too long when we're this hungry. Let's find somewhere nearby - we'll eat sooner and avoid the crowd.", next: "10.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's wander and see what we discover! Maybe we'll find some hidden gem or street food we never would have tried otherwise.", next: "10.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "10.1": {
+                scenario: "It's nearly midnight and you're both getting tired. You could head back to your hotel, but there's a late-night Thames boat tour departing in 15 minutes, or a 24-hour diner that locals say has the best breakfast in London.",
+                choices: [
+                    { text: "A moonlit boat ride sounds so dreamy! Even though we're tired, imagine how romantic the city lights will look from the water!", next: "end", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "We've had a full day and need rest for tomorrow's plans. Let's head back to the hotel and get proper sleep.", next: "end", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Local diner at midnight? That's where we'll find the real London experience! Who knows what characters we'll meet there.", next: "end", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "10.2": {
+                scenario: "After dinner, you walked past a late-night cinema showing a classic film that starts in 10 minutes, while across the street there's a 24-hour arcade that looks surprisingly fun and retro.",
+                choices: [
+                    { text: "Ooh, a classic film sounds so romantic! We could snuggle in the dark theater - that feels perfect after dinner together.", next: "end", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "The movie starts in 10 minutes, so we'd have to rush and might miss the beginning. The arcade has no time pressure - better choice.", next: "end", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "An arcade? When's the last time we played old-school games? Let's see what weird vintage stuff they have in there!", next: "end", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            }
+        };
+
+        // Archetype definitions
+        const archetypes = [
+            { name: "Intellectual", logical: 9, emotional: 2, exploratory: 6 },
+            { name: "Achiever", logical: 8, emotional: 4, exploratory: 5 },
+            { name: "Leader", logical: 7, emotional: 6, exploratory: 5 },
+            { name: "Explorer", logical: 3, emotional: 5, exploratory: 10 },
+            { name: "Rebel", logical: 4, emotional: 6, exploratory: 9 },
+            { name: "Peacemaker", logical: 5, emotional: 8, exploratory: 2 },
+            { name: "Dreamer", logical: 2, emotional: 9, exploratory: 8 },
+            { name: "Caregiver", logical: 3, emotional: 10, exploratory: 2 }
+        ];
+
+        // Vulnerability mappings
+        const vulnerabilityMappings = {
+            "Achiever": [
+                { 
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                }
+            ],
+            "Intellectual": [
+                {
+                    title: "THE WALKING TED TALK",
+                    characters: ["Tony Stark", "Light Yagami", "Sherlock Holmes", "Grand Admiral Thrawn"],
+                    why: "You love brilliance. You're drawn to people who seem like they have all the answers.",
+                    plotTwist: "They're not sharing wisdom. They're building a fanbase with you as audience #1.",
+                    blindSpot: "You confuse charisma with character. Intelligence ≠ emotional safety.",
+                    punchline: "You thought you met a genius. You met a god complex in a hoodie."
+                },
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                }
+            ],
+            "Leader": [
+                {
+                    title: "THE POWERHOUSE PARTNER",
+                    characters: ["Gustavo Fring", "Logan Roy", "Erwin Smith", "Severus Snape"],
+                    why: "You like confidence, control, and people who take charge. You think they're strong enough to protect you—and maybe fix you too.",
+                    plotTwist: "They're not protecting you. They're managing you.",
+                    blindSpot: "You confuse intensity for safety. But control isn't care.",
+                    punchline: "You saw leadership. Turns out, it was just domination in a nice coat."
+                },
+                {
+                    title: "THE DANGEROUS CHARMER",
+                    characters: ["Damon Salvatore", "Chuck Bass", "James Bond", "Casanova"],
+                    why: "They're smooth, magnetic, and just the right amount of broken. You love the rush.",
+                    plotTwist: "They don't want connection. They want conquest.",
+                    blindSpot: "You think you're the exception. You're actually chapter 12.",
+                    punchline: "You called it chemistry. They called it Tuesday."
+                }
+            ],
+            "Explorer": [
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                },
+                {
+                    title: "THE ICEBERG",
+                    characters: ["Mr. Darcy", "Don Draper", "Batman", "Gojo Satoru"],
+                    why: "You love mystery. You want someone who's deep, calm, and hard to reach.",
+                    plotTwist: "They're not deep. They're just not showing up.",
+                    blindSpot: "You think still waters run deep. But these waters never text back.",
+                    punchline: "You fell for the mystery. Turns out it was just absence."
+                }
+            ],
+            "Rebel": [
+                {
+                    title: "THE WALKING TED TALK",
+                    characters: ["Tony Stark", "Light Yagami", "Sherlock Holmes", "Grand Admiral Thrawn"],
+                    why: "You love brilliance. You're drawn to people who seem like they have all the answers.",
+                    plotTwist: "They're not sharing wisdom. They're building a fanbase with you as audience #1.",
+                    blindSpot: "You confuse charisma with character. Intelligence ≠ emotional safety.",
+                    punchline: "You thought you met a genius. You met a god complex in a hoodie."
+                },
+                {
+                    title: "THE DANGEROUS CHARMER",
+                    characters: ["Damon Salvatore", "Chuck Bass", "James Bond", "Casanova"],
+                    why: "They're smooth, magnetic, and just the right amount of broken. You love the rush.",
+                    plotTwist: "They don't want connection. They want conquest.",
+                    blindSpot: "You think you're the exception. You're actually chapter 12.",
+                    punchline: "You called it chemistry. They called it Tuesday."
+                }
+            ],
+            "Peacemaker": [
+                {
+                    title: "THE RULEBOOK ROMANTIC",
+                    characters: ["Captain Holt", "Coach Carter", "Major Kuldeep Singh", "Captain Levi"],
+                    why: "You love structure. Rules make you feel safe. And when they say 'discipline is love'—you believe it.",
+                    plotTwist: "It's not structure. It's control dressed up in duty.",
+                    blindSpot: "You mistake rigidity for reliability. But love shouldn't feel like a training camp.",
+                    punchline: "You thought it was devotion. It was just daily inspection with hugs."
+                },
+                {
+                    title: "THE DANGEROUS CHARMER",
+                    characters: ["Damon Salvatore", "Chuck Bass", "James Bond", "Casanova"],
+                    why: "They're smooth, magnetic, and just the right amount of broken. You love the rush.",
+                    plotTwist: "They don't want connection. They want conquest.",
+                    blindSpot: "You think you're the exception. You're actually chapter 12.",
+                    punchline: "You called it chemistry. They called it Tuesday."
+                }
+            ],
+            "Dreamer": [
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                },
+                {
+                    title: "THE CASTLE BUILDER",
+                    characters: ["Ted Mosby", "Nate", "Christian", "Tommy Shelby"],
+                    why: "They say all the right things. Future vacations, babies, matching tattoos—you melt.",
+                    plotTwist: "They dream big, but disappear when it's time to act.",
+                    blindSpot: "You confuse words with plans. Dreams with dates.",
+                    punchline: "You packed your bags. They were just daydreaming."
+                }
+            ],
+            "Caregiver": [
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                },
+                {
+                    title: "THE TRAGIC HERO",
+                    characters: ["BoJack Horseman", "Eeyore", "Werther", "Rue Bennett"],
+                    why: "You're compassionate. You want to help, to rescue, to love someone back to life.",
+                    plotTwist: "They don't want change. They want sympathy on tap.",
+                    blindSpot: "You think you're their lifeline. But they keep pulling you under.",
+                    punchline: "You brought the life raft. They popped it with feelings."
+                }
+            ]
+        };
+
+        // Archetype trait descriptions
+        const archetypeTraits = {
+            "Intellectual": {
+                description: "You possess a highly analytical approach to life, keenly examining and dissecting information to understand things thoroughly. You have an insatiable curiosity and a deep thirst for knowledge that drives you to continuously learn and expand your understanding. You rely heavily on logic and rationality, preferring to make decisions based on facts and reasoned arguments rather than emotions. You're introspective and detail-oriented, often spending significant time in self-reflection and striving for accuracy in your endeavors."
+            },
+            "Achiever": {
+                description: "You are highly driven to succeed and set lofty goals that you're determined to achieve. You have a strong desire to outperform others and seek recognition through your accomplishments. You're well-organized, meticulous in planning, and value efficiency. Your identity is closely tied to your professional achievements, and you possess an exceptional ability to concentrate on your goals. You're willing to take calculated risks and show strong resilience in recovering from setbacks."
+            },
+            "Leader": {
+                description: "You have a strong sense of self-assurance and believe in your abilities to make decisions and lead others. You're known for making decisions efficiently under pressure and expressing your views assertively. You possess natural charisma that attracts and motivates others, combined with high emotional intelligence. You're a strategic thinker who can plan for the long-term, and you exhibit a strong sense of ethics and integrity that sets a moral example for others."
+            },
+            "Explorer": {
+                description: "You are driven by a desire to explore and engage with new and diverse experiences. You're often seen as a thrill-seeker who relishes novel situations. You possess high levels of energy and enthusiasm, especially when pursuing activities that excite you. Your spontaneous nature means you often act on impulse, and you exhibit a fearless attitude, willing to take risks others might avoid. You're typically very adaptable, able to adjust to new environments with ease."
+            },
+            "Rebel": {
+                description: "You value your independence highly and seek autonomy in your actions and decisions. You resist conforming to societal norms and often question traditional ways of doing things. You're naturally skeptical of authority and have a well-developed sense of justice, willing to fight for causes you believe in. You think outside the box and bring unconventional ideas to the table. Your non-conformist nature makes you seem unpredictable at times, but you're driven by idealism and principle."
+            },
+            "Peacemaker": {
+                description: "You are naturally inclined towards maintaining harmony and balance in your environment. You prioritize peace over conflict and often go to great lengths to avoid upsetting situations. You're highly empathetic and capable of understanding others' feelings deeply. You possess a natural talent for diplomacy, often mediating disputes and helping resolve conflicts. You're patient, supportive, and nurturing, providing a calming presence to those around you."
+            },
+            "Dreamer": {
+                description: "You are driven by a strong sense of vision and ideals, with lofty goals to make a significant impact. Your outlook on life is generally positive, seeing the best in people and focusing on possibilities. You possess a creative and imaginative mind, thinking outside the box and coming up with innovative ideas. You're introspective and emotionally sensitive, feeling emotions deeply and connecting with people on a profound level. Your actions are guided by ideals rather than practical considerations."
+            },
+            "Caregiver": {
+                description: "You have an inherent desire to care for and nurture others, often putting their needs before your own. You're deeply empathetic and attuned to others' emotions and needs. You exhibit genuine concern for others' welfare and are often involved in helping activities. You show deep compassion and understanding, especially towards those in need. Others see you as reliable and dependable, often turning to you for emotional and practical support."
+            }
+        };
+        let demographics = { ethnicity: '', orientation: '' };
+        let currentQuestion = "1";
+        let scores = { emotional: 0, logical: 0, exploratory: 0 };
+        let selectedChoices = new Set();
+        let multiSelectNexts = [];
+        let pendingQuestions = [];
+        let isInMultiSelectSequence = false;
+        let multiSelectProgress = 0;
+
+        // Start quiz function
+        // Modified start quiz function to show demographics first
+        function startQuiz() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('demographics-screen').style.display = 'block';
+        }
+
+        // New function to store demographics and start the actual quiz
+        function startActualQuiz() {
+            // Get the selected values
+            const ethnicity = document.getElementById('ethnicity-select').value;
+            const orientation = document.getElementById('orientation-select').value;
+            
+            // Check if both are selected
+            if (!ethnicity || !orientation) {
+                alert('Please select both fields to continue');
+                return;
+            }
+            
+            // Store the values (you can use these later)
+            demographics.ethnicity = ethnicity;
+            demographics.orientation = orientation;
+            
+            // Hide demographics screen and show quiz
+            document.getElementById('demographics-screen').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            
+            // Reset quiz state and start
+            currentQuestion = "1";
+            scores = { emotional: 0, logical: 0, exploratory: 0 };
+            selectedChoices.clear();
+            multiSelectNexts = [];
+            pendingQuestions = [];
+            isInMultiSelectSequence = false;
+            multiSelectProgress = 0;
+            
+            showQuestion(currentQuestion);
+        }   
+
+        // Show question function
+        function showQuestion(questionId) {
+            const question = questions[questionId];
+            const container = document.getElementById('question-content');
+            
+            let html = `<div class="question-container">`;
+            
+            // Add indicator if this is from a multi-select sequence
+            if (isInMultiSelectSequence) {
+                html += `<div style="text-align: center; color: #f39c12; margin-bottom: 20px; font-size: 0.9em;">Activity ${multiSelectProgress} of 2</div>`;
+            }
+            
+            html += `<div class="scenario">${question.scenario}</div>`;
+            
+            if (question.multiSelect) {
+                html += `<div class="multi-select-info">Select exactly ${question.multiSelect} options</div>`;
+            }
+            
+            html += `<div class="choices">`;
+            
+            question.choices.forEach((choice, index) => {
+                html += `<div class="choice" onclick="selectChoice('${questionId}', ${index})">${choice.text}</div>`;
+            });
+            
+            html += `</div>`;
+            html += `<button class="next-btn" id="next-btn" onclick="nextQuestion()" disabled>Continue</button>`;
+            html += `</div>`;
+            
+            container.innerHTML = html;
+            selectedChoices.clear();
+            multiSelectNexts = [];
+        }
+
+        // Select choice function
+        function selectChoice(questionId, choiceIndex) {
+            const question = questions[questionId];
+            const choice = question.choices[choiceIndex];
+            const choiceElements = document.querySelectorAll('.choice');
+            
+            if (question.multiSelect) {
+                // Multi-select logic
+                if (selectedChoices.has(choiceIndex)) {
+                    selectedChoices.delete(choiceIndex);
+                    choiceElements[choiceIndex].classList.remove('selected');
+                } else if (selectedChoices.size < question.multiSelect) {
+                    selectedChoices.add(choiceIndex);
+                    choiceElements[choiceIndex].classList.add('selected');
+                }
+                
+                // Enable/disable next button
+                document.getElementById('next-btn').disabled = selectedChoices.size !== question.multiSelect;
+            } else {
+                // Single select logic
+                choiceElements.forEach(el => el.classList.remove('selected'));
+                choiceElements[choiceIndex].classList.add('selected');
+                selectedChoices.clear();
+                selectedChoices.add(choiceIndex);
+                document.getElementById('next-btn').disabled = false;
+            }
+        }
+
+        // Next question function
+        function nextQuestion() {
+            const question = questions[currentQuestion];
+            let nextQuestionId = null;
+            
+            // Calculate scores
+            selectedChoices.forEach(index => {
+                const choice = question.choices[index];
+                scores.emotional += choice.scores.emotional;
+                scores.logical += choice.scores.logical;
+                scores.exploratory += choice.scores.exploratory;
+                
+                if (question.multiSelect) {
+                    multiSelectNexts.push(choice.next);
+                } else if (pendingQuestions.length === 0) {
+                    // Only set next if we don't have pending questions
+                    nextQuestionId = choice.next;
+                }
+            });
+            
+            // Handle multi-select navigation
+            if (question.multiSelect && multiSelectNexts.length > 0) {
+                // Start multi-select sequence
+                isInMultiSelectSequence = true;
+                multiSelectProgress = 1;
+                pendingQuestions = [...multiSelectNexts];
+                multiSelectNexts = [];
+                // Show the first selected question
+                nextQuestionId = pendingQuestions.shift();
+            } else if (pendingQuestions.length > 0) {
+                // Continue multi-select sequence
+                multiSelectProgress = 2;
+                nextQuestionId = pendingQuestions.shift();
+            } else {
+                // End multi-select sequence if we were in one
+                if (isInMultiSelectSequence) {
+                    isInMultiSelectSequence = false;
+                    multiSelectProgress = 0;
+                }
+                // Use the normal next question logic
+                if (!nextQuestionId) {
+                    const choiceIndex = [...selectedChoices][0];
+                    nextQuestionId = question.choices[choiceIndex].next;
+                }
+            }
+            
+            if (nextQuestionId === "end" || !questions[nextQuestionId]) {
+                showResults();
+            } else {
+                currentQuestion = nextQuestionId;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        // Calculate archetype
+        function calculateArchetype() {
+            let minDistance = Infinity;
+            let closestArchetype = null;
+            
+            archetypes.forEach(archetype => {
+                const distance = Math.sqrt(
+                    Math.pow(scores.logical - archetype.logical, 2) +
+                    Math.pow(scores.emotional - archetype.emotional, 2) +
+                    Math.pow(scores.exploratory - archetype.exploratory, 2)
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestArchetype = archetype;
+                }
+            });
+            
+            return closestArchetype;
+        }
+
+        // Show results
+
+        function showResults() {
+            const archetype = calculateArchetype();
+            const vulnerabilities = vulnerabilityMappings[archetype.name] || [];
+            const traits = archetypeTraits[archetype.name] || { description: "" };
+            
+            // ADD THIS IF CHECK for safety:
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'quiz_completed', {
+                    'archetype': archetype.name,
+                    'emotional_score': scores.emotional,
+                    'logical_score': scores.logical,
+                    'exploratory_score': scores.exploratory,
+                    'ethnicity': demographics.ethnicity,
+                    'orientation': demographics.orientation
+                });
+
+                // Track which toxic patterns they saw
+                vulnerabilities.forEach(vuln => {
+                    gtag('event', 'toxic_pattern_shown', {
+                        'pattern_type': vuln.title,
+                        'archetype': archetype.name
+                    });
+                });
+            }
+
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            
+            let html = `<div class="result-container">`;
+            
+            // Show personalized description with intro
+            html += `<div class="personality-intro">`;
+            html += `<p class="personality-text">${traits.description}</p>`;
+            html += `<p class="warning-text">⚠️ WARNING: Toxic Attraction Patterns Detected</p>`;
+            html += `</div>`;
+
+
+            // Cards container
+            html += `<div class="cards-container">`;
+            
+            // Generate cards for each vulnerability
+            vulnerabilities.forEach((vuln, index) => {
+                // Calculate a match percentage (based on scores for variety)
+                const matchPercentage = 70 + Math.floor((scores.emotional + scores.logical + scores.exploratory + index * 5) % 20);
+                
+                html += `<div class="character-card" onclick="flipCard(this)">`;
+                html += `<div class="card-inner">`;
+                
+                // Front of card (dating profile style)
+                html += `<div class="card-front">`;
+                html += `<div class="match-percentage">${matchPercentage}% MATCH</div>`;
+                html += `<h3 class="card-title">${vuln.title}</h3>`;
+                html += `<div class="character-avatars">`;
+                vuln.characters.forEach(char => {
+                    html += `<span class="avatar">${char}</span>`;
+                });
+                html += `</div>`;
+                html += `<p class="attraction-text">"${vuln.why}"</p>`;
+                html += `<div class="click-to-flip">Click to reveal the truth →</div>`;
+                html += `</div>`;
+                
+                // Back of card (the dark truth)
+                html += `<div class="card-back">`;
+                html += `<h3 class="card-title" style="color: #e74c3c;">🚩 RED FLAGS 🚩</h3>`;
+                html += `<div class="red-flags">`;
+                html += `<div class="red-flag"><strong>The Plot Twist:</strong> ${vuln.plotTwist}</div>`;
+                html += `<div class="red-flag"><strong>Your Blind Spot:</strong> ${vuln.blindSpot}</div>`;
+                html += `<div class="red-flag"><strong>The Hard Truth:</strong> ${vuln.punchline}</div>`;
+                html += `</div>`;
+                html += `<div class="defense-tip">`;
+                html += `<strong>💚 Defense Mechanism:</strong>`;
+                html += getDefenseTip(vuln.title);
+                html += `</div>`;
+                html += `</div>`;
+                
+                html += `</div>`;
+                html += `</div>`;
+            });
+            
+            html += `</div>`;
+            
+            html += `<p class="swipe-hint">Click each card to reveal the hidden truth</p>`;
+            
+            // Add protection summary
+            html += `<div style="background: rgba(46, 204, 113, 0.1); border: 2px solid rgba(46, 204, 113, 0.3); padding: 30px; border-radius: 15px; margin: 40px auto; max-width: 600px; text-align: center;">`;
+            html += `<h3 style="color: #2ecc71; margin-bottom: 15px;">💚 Your Protection Protocol</h3>`;
+            html += `<p style="line-height: 1.8;">Knowledge is your first line of defense. Now that you know your patterns, you can spot these toxic types from a distance. Trust your instincts, maintain your boundaries, and remember: the right person won't feel like a puzzle to solve or a challenge to win.</p>`;
+            html += `</div>`;
+
+            // Next step
+            html += `<div style="text-align: center; margin: 30px 0;">`;
+            html += `<h3 style="color: #f39c12; margin-bottom: 20px;">Wait... does someone in your life remind you of these characters? Our AI Relationship Coach can analyze your relationship patterns and reveal if you're already living this story...</h3>`;
+            html += `<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">`;
+            html += `<a href="https://6848340aa0a2233a0e0a63e9--partner-assessment-tool.netlify.app/" style="background: linear-gradient(45deg, #f39c12, #e74c3c); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-block; font-weight: bold;">Talk to Our Relationship Coach</a>`;
+            html += `<a href=" https://tally.so/r/w8gx25" style="background: rgba(255, 255, 255, 0.1); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; display: inline-block; border: 2px solid rgba(255, 255, 255, 0.3);">Give Feedback</a>`;
+            html += `</div>`;
+            html += `</div>`;
+            
+            document.getElementById('result-content').innerHTML = html;
+        }
+        
+        // Flip card function
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+        
+        // Get defense tips based on toxic type
+        function getDefenseTip(toxicType) {
+            const defenseTips = {
+                "THE CHARMING MANIPULATOR": "Trust actions over words. If someone's behavior doesn't match their promises, that's your cue to step back.",
+                "THE POWERHOUSE PARTNER": "Leadership is about empowerment, not control. A true partner lifts you up, not manages you down.",
+                "THE RULEBOOK ROMANTIC": "Structure should create freedom, not cage it. Love has room for spontaneity.",
+                "THE WALKING TED TALK": "Intelligence without emotional availability is just a monologue. Look for dialogue.",
+                "THE DANGEROUS CHARMER": "Chemistry fades, character remains. Don't let excitement blind you to red flags.",
+                "THE CASTLE BUILDER": "Dreams are beautiful, but love is built on actions. Watch for follow-through.",
+                "THE TRAGIC HERO": "You can't love someone into wellness. They need to want change for themselves.",
+                "THE ICEBERG": "Mystery isn't the same as unavailability. You deserve someone who shows up."
+            };
+            return defenseTips[toxicType] || "Remember: healthy relationships feel safe, not like a challenge to win.";
+        }
+        
+        // Find this section in showResults():
+
+// Show scores continues here...
+        // Restart quiz function
+        function restartQuiz() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('intro-screen').style.display = 'block';
+        }
+    </script>
