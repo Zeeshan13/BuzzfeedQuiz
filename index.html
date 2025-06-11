@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N2JZPNV27G"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N2JZPNV27G');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toxic Attraction Pattern Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.1;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2em;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .floating-icon:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { left: 30%; animation-delay: 3s; }
+        .floating-icon:nth-child(3) { left: 50%; animation-delay: 6s; }
+        .floating-icon:nth-child(4) { left: 70%; animation-delay: 9s; }
+        .floating-icon:nth-child(5) { left: 90%; animation-delay: 12s; }
+
+        /* Main Container */
+        .main-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Title Section */
+        .title-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .title-emojis {
+            font-size: 2em;
+            margin-top: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 20px;
+            font-family: Georgia, serif;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(243, 156, 18, 0.3);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            font-size: 1.5em;
+        }
+
+        .feature-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .feature-description {
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Warning Card Special Style */
+        .warning-card {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .warning-card .feature-title {
+            color: #e74c3c;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-question {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: Georgia, serif;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .start-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.5);
+        }
+
+        /* Trust Indicators */
+        .trust-section {
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9em;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 40px 25px;
+            }
+
+            .main-title {
+                font-size: 2em;
+            }
+
+            .feature-card {
+                padding: 25px;
+            }
+
+            .feature-title {
+                font-size: 1.1em;
+            }
+
+            .start-btn {
+                padding: 15px 40px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* Pulse animation for warning */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .warning-card {
+            animation: pulse 3s infinite;
+        }
+        
+        .demographic-section {
+            margin-bottom: 25px;
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+        }
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .question-container,
+        .intro {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-container {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scenario {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .choice {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .choice.selected {
+            background: rgba(243, 156, 18, 0.2);
+            border-color: #f39c12;
+        }
+
+        .multi-select-info {
+            text-align: center;
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Results Container */
+        .result-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Results Hero Section */
+        .results-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .journey-complete {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            color: #2ecc71;
+            margin-bottom: 25px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .results-title {
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+            animation: fadeIn 1s ease 0.2s both;
+        }
+
+        .results-subtitle {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease 0.4s both;
+        }
+
+        /* Personality Reveal Section */
+        .personality-reveal {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.8s ease 0.6s both;
+        }
+
+        .personality-reveal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .personality-label {
+            font-size: 1em;
+            color: #f39c12;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .personality-description {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Matches Introduction */
+        .matches-intro {
+            text-align: center;
+            margin: 60px auto;
+            max-width: 700px;
+            animation: fadeIn 0.8s ease 0.8s both;
+        }
+
+        .matches-intro h2 {
+            color: #f39c12;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .matches-intro p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Dating App Header */
+        .dating-app-header {
+            text-align: center;
+            margin: 50px auto;
+            padding: 40px 20px;
+            background: rgba(231, 76, 60, 0.05);
+            border-radius: 25px;
+            max-width: 600px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                border-color: rgba(231, 76, 60, 0.2);
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+            }
+            50% { 
+                border-color: rgba(231, 76, 60, 0.4);
+                box-shadow: 0 0 20px 5px rgba(231, 76, 60, 0.1);
+            }
+        }
+
+        .dating-app-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .dating-app-header h2 span {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .matches-count {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            padding: 15px 35px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 25px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #f39c12;
+        }
+
+        /* Updated Swipe Container for Results Page */
+        .result-container .swipe-container {
+            position: relative;
+            height: 700px;
+            width: 100%;
+            max-width: 400px;
+            margin: 40px auto;
+            overflow: hidden !important;
+        }
+
+        /* Character Avatar in Cards */
+        .character-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Card Sections */
+        .content-section {
+            padding: 25px;
+            min-height: 400px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+        }
+
+        /* Dating Profile Bio Box */
+        .content-section > div:first-child {
+            margin-bottom: 30px;
+        }
+
+        /* Protection Protocol */
+        .protection-protocol {
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid rgba(46, 204, 113, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px auto;
+            max-width: 700px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .protocol-title {
+            color: #2ecc71;
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .protection-protocol ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+        }
+
+        .protection-protocol li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        /* Next Steps Section */
+        .next-steps {
+            text-align: center;
+            margin: 80px auto;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            max-width: 800px;
+        }
+
+        .next-steps-title {
+            color: #f39c12;
+            font-size: 2em;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .next-steps p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 35px;
+        }
+
+        .primary-cta, .secondary-cta {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .primary-cta {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: white;
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .primary-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.5);
+        }
+
+        .secondary-cta {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .secondary-cta:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #f39c12;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Swipe Actions */
+        .swipe-actions {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 30px 0;
+        }
+
+        .swipe-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .reject-btn {
+            background: rgba(231, 76, 60, 0.2);
+            border: 3px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .accept-btn {
+            background: rgba(46, 204, 113, 0.2);
+            border: 3px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .swipe-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .reject-btn:hover {
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        .accept-btn:hover {
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        /* Card Indicator */
+        .card-indicator {
+            text-align: center;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1em;
+        }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .results-title {
+            font-size: 2em;
+        }
+        
+        .results-hero {
+            padding: 40px 15px 30px;
+        }
+        
+        .personality-reveal {
+            padding: 30px 20px;
+        }
+        
+        .dating-app-header {
+            padding: 30px 15px;
+        }
+        
+        .protection-protocol {
+            padding: 30px 20px;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .primary-cta, .secondary-cta {
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+        }
+        
+        .swipe-actions {
+            gap: 30px;
+        }
+        
+        .swipe-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+        }
+    }
+
+    /* Ensure smooth scrolling on results */
+    html {
+        scroll-behavior: smooth;
+    }
+
+        /* Desktop hover effect */
+        /* More specific hover effect for desktop */
+        @media (min-width: 768px) {
+            .swipe-container .swipe-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .swipe-container .swipe-card:hover:not(.dragging):not(.swiping-left):not(.swiping-right) {
+                cursor: grab;
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                transform: translateY(-5px) scale(1.02);
+                z-index: 100 !important; /* Make sure it's on top */
+            }
+            
+            .swipe-container .swipe-card.dragging {
+                cursor: grabbing !important;
+            }
+        }
+
+        /* Fix z-index stacking - IMPORTANT! */
+        .swipe-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            cursor: grab;
+            transition: transform 0.2s, opacity 0.2s;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            top: 0;  /* ADD THIS */
+            left: 0; /* ADD THIS */
+        }
+
+        .swipe-card:nth-last-child(3) { z-index: 12; }
+        .swipe-card:nth-last-child(4) { z-index: 11; }
+        .swipe-card:nth-last-child(5) { z-index: 10; }
+        .swipe-card:nth-last-child(6) { z-index: 9; }
+        .swipe-card:nth-last-child(7) { z-index: 8; }
+        .swipe-card:nth-last-child(8) { z-index: 7; }
+        .swipe-card:nth-last-child(9) { z-index: 6; }
+        .swipe-card:nth-last-child(10) { z-index: 5; }
+        .swipe-card:nth-last-child(11) { z-index: 4; }
+        .swipe-card:nth-last-child(12) { z-index: 3; }
+
+        .card-content {
+            padding: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .match-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .nope-label, .like-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .nope-label {
+            left: 20px;
+            color: #e74c3c;
+            border: 4px solid #e74c3c;
+            transform: translateY(-50%) rotate(-30deg);
+        }
+
+        .like-label {
+            right: 20px;
+            color: #2ecc71;
+            border: 4px solid #2ecc71;
+            transform: translateY(-50%) rotate(30deg);
+        }
+
+        .swipe-card.tilting-right .like-label {
+            opacity: 1;
+        }
+
+        .swipe-card.tilting-left .nope-label {
+            opacity: 1;
+        }
+
+
+        /* Section labels in swipe cards */
+        .section-label {
+            font-size: 0.9em;
+            color: #f39c12;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Progress bar styles (if you're using them) */
+        .progress-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            transition: width 0.3s ease;
+        }
+
+        .swipe-hint {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 20px;
+            font-size: 0.9em;
+            animation: fadeIn 1s ease-in 2s forwards;
+            opacity: 0;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background elements -->
+    <div class="floating-icons">
+        <div class="floating-icon">✈️</div>
+        <div class="floating-icon">🧳</div>
+        <div class="floating-icon">💕</div>
+        <div class="floating-icon">🗺️</div>
+        <div class="floating-icon">❤️</div>
+    </div>
+
+    <section class="hero-section" id="intro-screen">
+        <div class="main-container">
+            <!-- Title Section -->
+            <div class="title-section">
+                <h1 class="main-title">Find Your Perfect Match Through an Interactive Travel Story</h1>
+                <div class="title-emojis">🧳💕</div>
+                <p class="subtitle">Here's how it works:</p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <!-- Choose Your Own Adventure -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-icon">📖</span>
+                        <h3 class="feature-title">Choose Your Own Adventure</h3>
+                    </div>
+                    <p class="feature-description">
+                        Navigate a couple's trip where every choice shapes your story. 
+                        Will you go to Paris or London? Stay or leave? Your decisions 
+                        create different paths and endings.
+                    </p>
+                </div>
+
+                <!-- More Than Just a Quiz -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-icon">💘</span>
+                        <h3 class="feature-title">More Than Just a Quiz</h3>
+                    </div>
+                    <p class="feature-description">
+                        While you're making travel choices, our algorithm is finding your 
+                        ideal dating matches. Strange? Maybe. Accurate? Definitely.
+                    </p>
+                </div>
+
+                <!-- The Connection -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-icon">🔮</span>
+                        <h3 class="feature-title">The Connection</h3>
+                    </div>
+                    <p class="feature-description">
+                        Your travel decisions reveal personality patterns that predict 
+                        exactly who you're attracted to. We use this to show you your matches.
+                    </p>
+                </div>
+
+                <!-- Fair Warning -->
+                <div class="feature-card warning-card">
+                    <div class="feature-header">
+                        <span class="feature-icon">⚠️</span>
+                        <h3 class="feature-title">Fair Warning</h3>
+                    </div>
+                    <p class="feature-description">
+                        These aren't the dream dates you're expecting. Each match comes 
+                        with hidden red flags you probably won't see coming.
+                    </p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <p class="cta-question">Ready to take a trip and meet your matches?</p>
+                <button class="start-btn" onclick="startJourney()">
+                    Start Your Journey →
+                </button>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="trust-section">
+                <p>Takes 5 minutes • 100% anonymous • Surprisingly accurate</p>
+            </div>
+        </div>
+    </section>
+
+    
+        
+    <div id="demographics-screen" style="display: none;">
+        <div class="question-container">
+            <h2 style="text-align: center; color: #f39c12; margin-bottom: 30px;">Tell Us About Yourself</h2>
+            <p style="text-align: center; opacity: 0.8; margin-bottom: 40px;">This helps us provide more personalized insights</p>
+            
+            <div class="demographic-section">
+                <label style="display: block; margin-bottom: 15px; font-size: 1.1em;">What is your ethnicity?</label>
+                <select id="ethnicity-select" style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: white; font-size: 1em;">
+                    <option value="">Select your ethnicity</option>
+                    <option value="asian">Asian</option>
+                    <option value="black">Black/African American</option>
+                    <option value="hispanic">Hispanic/Latino</option>
+                    <option value="white">White/Caucasian</option>
+                    <option value="middle-eastern">Middle Eastern</option>
+                    <option value="native">Native American</option>
+                    <option value="pacific-islander">Pacific Islander</option>
+                    <option value="mixed">Mixed/Multiple</option>
+                    <option value="other">Other</option>
+                    <option value="prefer-not">Prefer not to say</option>
+                </select>
+            </div>
+            
+            <div class="demographic-section" style="margin-top: 30px;">
+                <label style="display: block; margin-bottom: 15px; font-size: 1.1em;">What is your sexual orientation?</label>
+                <select id="orientation-select" style="width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: white; font-size: 1em;">
+                    <option value="">Select your orientation</option>
+                    <option value="straight">Straight/Heterosexual</option>
+                    <option value="gay">Gay</option>
+                    <option value="lesbian">Lesbian</option>
+                    <option value="bisexual">Bisexual</option>
+                    <option value="pansexual">Pansexual</option>
+                    <option value="asexual">Asexual</option>
+                    <option value="queer">Queer</option>
+                    <option value="questioning">Questioning</option>
+                    <option value="other">Other</option>
+                    <option value="prefer-not">Prefer not to say</option>
+                </select>
+            </div>
+            
+            <button class="next-btn" onclick="startActualQuiz()" style="margin-top: 40px;">Continue to Quiz</button>
+        </div>
+    </div>
+
+    <div id="quiz-container" style="display: none;">
+        <div class="container">
+            <div id="question-content"></div>
+        </div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="result-container" style="display: none;">
+        <div class="container">
+            <div id="result-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data structure with complete questions
+        const questions = {
+            "1": {
+                scenario: "First you need to decide on your travel itinerary. How many days do you want your trip to be?",
+                choices: [
+                    { text: "Let's pick whatever number of days makes us both feel relaxed and connected.", next: "2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'll run the costs and schedules to choose the most efficient trip length.", next: "2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's go as long as our schedules allow—more days means more chances for spontaneous adventures.", next: "2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "2": {
+                scenario: "Now you need to decide on where to go. You have always wanted to visit Paris but your partner thinks London would be more fun.",
+                choices: [
+                    { text: "If London makes you happier, I'm good with it.", next: "3.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Paris makes more sense—better flights, lower costs, and amazing attractions.", next: "3.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "London just feels right to me—I love the idea of exploring somewhere unexpected.", next: "3.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "3.1": {
+                scenario: "You guys are going to London!! You are excited, But the night before the flight your partner told you work came up and they had to stay behind for another day.",
+                choices: [
+                    { text: "I'll cancel and rebook so we arrive together. I don't want to be in a new place alone.", next: "4.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'll compare rebooking fees; if it's too high, I'll go ahead today, check in, and you can join me tomorrow.", next: "4.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "This is actually great—more time to plan my day. I'll go today solo and explore until you arrive tomorrow.", next: "4.3", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "3.2": {
+                scenario: "You guys are going to Paris!! You are excited, But the night before the flight your partner told you work came up and they had to stay behind for another day.",
+                choices: [
+                    { text: "I don't want to experience a new city without you. Let me rebook so we can go together.", next: "4.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let me check the rebooking fees first. If they're reasonable, I'll wait. If not, I'll go ahead and you can join tomorrow.", next: "4.4", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Actually, this could be fun! I'll go explore on my own today and have stories to share when you arrive.", next: "4.4", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.1": {
+                scenario: "You canceled your flight and booked a hotel near the airport. It's late evening and your partner still hasn't replied to any texts all day.",
+                choices: [
+                    { text: "You pick up your phone again and text: 'Please let me know you're okay—I'm really worried.'", next: "5.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "You decide to leave the hotel for a bit—grab coffee at a nearby café and take photos of the city at night until they respond.", next: "5.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "They're probably still tied up with work. I'll confirm that everything on my end is in order and avoid reaching out until necessary.", next: "5.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.2": {
+                scenario: "You canceled your flight and booked a hotel near the airport. It's late evening and your partner still hasn't replied to any texts all day.",
+                choices: [
+                    { text: "You pick up your phone again and text: 'Please let me know you're okay—I'm really worried.'", next: "5.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "They're probably swamped with work. I'll explore the area and grab coffee until they respond.", next: "5.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Work emergencies happen. I'll double-check our new flight details and wait for them to reach out.", next: "5.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.3": {
+                scenario: "You arrive in London alone because your partner's flight was pushed to tomorrow. Your hotel room is booked; it's 10 AM and you have a free day.",
+                choices: [
+                    { text: "I'll go spend time in that beautiful café we always wanted to visit—and send you a photo so you feel part of it.", next: "5.3", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's stick to the plan and take that tour since I'm already here—no need to reinvent the day.", next: "5.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just wander around and see what catches my eye in this neighborhood.", next: "5.3", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "4.4": {
+                scenario: "You arrive in Paris alone because your partner's flight was pushed to tomorrow. Your hotel room is booked; it's 10 AM and you have a free day.",
+                choices: [
+                    { text: "I'll go spend time in that beautiful café we always wanted to visit—and send them a photo so they feel part of it.", next: "5.4", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's stick to the plan and take that tour since I'm already here—no need to reinvent the day.", next: "5.4", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just wander around and see what catches my eye in this neighborhood.", next: "5.4", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.1": {
+                scenario: "Later, your partner arrives at the hotel. 'Work has been crazy and I'm sorry for not replying to your texts all day,' they say.",
+                choices: [
+                    { text: "I was so worried! I felt completely ignored and it really hurt my feelings. I need you to understand how that made me feel.", next: "6.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I understand work gets hectic. Just send a quick 'busy today' text next time so I know what's happening.", next: "6.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "No worries! I ended up discovering some cool places on my own. Actually worked out pretty well - want to hear about it?", next: "6.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.2": {
+                scenario: "Later, your partner arrives at the hotel. 'Work has been crazy and I'm sorry for not replying to your texts all day,' they say.",
+                choices: [
+                    { text: "I was so worried! I felt completely ignored and it really hurt my feelings. I need you to understand how that made me feel.", next: "6.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I understand work gets hectic. Just send a quick 'busy today' text next time so I know what's happening.", next: "6.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "No worries! I ended up discovering some cool places on my own. Actually worked out pretty well - want to hear about it?", next: "6.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "5.3": {
+                scenario: "You're walking down a bustling London street when you see a street artist creating an incredible portrait—but your phone battery is at 5%.",
+                choices: [
+                    { text: "This is too amazing not to capture—I'll risk my phone dying for this moment.", next: "6.3", scores: { emotional: 0, logical: 0, exploratory: 2 } },
+                    { text: "I'll snap one quick photo, then save the rest of my battery.", next: "6.3", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'll just enjoy this without my phone—some moments are better experienced than photographed.", next: "6.3", scores: { emotional: 2, logical: 0, exploratory: 0 } }
+                ]
+            },
+            "5.4": {
+                scenario: "You're strolling down Rue Montorgueil when you hear a street musician playing something so moving you stop in your tracks—but your phone battery is at 5%.",
+                choices: [
+                    { text: "This is too amazing not to capture—I'll risk my phone dying for this moment.", next: "6.4", scores: { emotional: 0, logical: 1, exploratory: 1 } },
+                    { text: "I'll snap one quick photo, then save the rest of my battery.", next: "6.4", scores: { emotional: 1, logical: 1, exploratory: 0 } },
+                    { text: "I'll just enjoy this without my phone—some moments are better experienced than photographed.", next: "6.4", scores: { emotional: 1, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.1": {
+                scenario: "The next day, you and your partner flew in and checked into your hotel. Now you have a few hours before dinner. Pick exactly two of these to begin your day:",
+                multiSelect: 2,
+                choices: [
+                    { text: "Big Ben & Westminster - Visit the iconic landmark and learn its history", next: "7.1", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "London Eye - Share a romantic moment high above the Thames", next: "7.2", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pub in Covent Garden - Discover a secret local spot off the beaten path", next: "7.3", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.2": {
+                scenario: "The next day, you and your partner flew in and checked into your hotel. Now you have a few hours before dinner. Pick exactly two of these to begin your day:",
+                multiSelect: 2,
+                choices: [
+                    { text: "The Louvre - Explore world-famous art and masterpieces", next: "7.4", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "Eiffel Tower - Share a romantic view from Paris's most iconic spot", next: "7.5", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pâtisserie - Hunt down a secret bakery locals rave about", next: "7.6", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.3": {
+                scenario: "The next day, your partner arrives and you both check into your hotel. With a few hours to kill before dinner, you decide to explore. Pick exactly two activities to start your adventure:",
+                multiSelect: 2,
+                choices: [
+                    { text: "Big Ben & Westminster - Visit the iconic landmark and learn its history", next: "7.1", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "London Eye - Share a romantic moment high above the Thames", next: "7.2", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pub in Covent Garden - Discover a secret local spot off the beaten path", next: "7.3", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "6.4": {
+                scenario: "The next day, your partner arrives and you both check into your hotel. With a few hours to kill before dinner, you decide to explore. Pick exactly two activities to start your adventure:",
+                multiSelect: 2,
+                choices: [
+                    { text: "The Louvre - Explore world-famous art and masterpieces", next: "7.4", scores: { emotional: 0, logical: 1, exploratory: 0 } },
+                    { text: "Eiffel Tower - Share a romantic view from Paris's most iconic spot", next: "7.5", scores: { emotional: 1, logical: 0, exploratory: 0 } },
+                    { text: "Hidden Pâtisserie - Hunt down a secret bakery locals rave about", next: "7.6", scores: { emotional: 0, logical: 0, exploratory: 1 } }
+                ]
+            },
+            "7.1": {
+                scenario: "As you approach Big Ben, your partner suddenly feels overwhelmed by the crowd. They tug your arm and say, 'Can we leave? I can't focus like this.'",
+                choices: [
+                    { text: "I'd step aside with them and focus on how they're feeling before anything else.", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Sure, but let me grab one quick photo since we made it this far.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "I'd point toward the church and say, 'Let's try in there instead.'", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.2": {
+                scenario: "You're riding the London Eye just as the sun dips below the skyline. The capsule gently rotates, offering sweeping views over the Thames. Your partner's phone buzzes: it's a text from a friend who has extra tickets to a secret rooftop concert starting now.",
+                choices: [
+                    { text: "I've been dreaming of this ride—let's finish it. We can't bail now; I want us to share this moment.", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "We paid for this ride and have 20 minutes left. Let's finish, then maybe catch the concert after.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Secret concert? Way more exciting than this tourist trap! Let's go see what happens!", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.3": {
+                scenario: "After skipping the big landmarks, you and your partner are wandering side streets. A street performer invites you both to join their improv sketch in front of a small crowd.",
+                choices: [
+                    { text: "Oh my god, that sounds fun! Are you up for it? Let's do it!", next: "9.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Hmm, let me just watch for a sec to see what we're getting into first.", next: "9.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Sure, why not? Let's see what happens!", next: "9.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.4": {
+                scenario: "You're at the Louvre with only two hours before it closes. There are so many famous works to see, but you can't possibly visit everything. How do you decide what to prioritize?",
+                choices: [
+                    { text: "I really want to see the Mona Lisa—that's been on my bucket list forever!", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Let's pick the top 3 must-see sections and focus on those so we don't waste time.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's just wander and see what draws us in—we might discover something amazing.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.5": {
+                scenario: "Your partner wants to write a love note and lock it at the top of the Eiffel Tower. You're not sure.",
+                choices: [
+                    { text: "It might be cheesy, but it's meaningful to them—so I'd go for it.", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "I'd prefer snapping a great picture—something we'll actually keep and look at.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's write it but hide it somewhere unexpected up there—feels more fun and personal.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "7.6": {
+                scenario: "You and your partner discover a small, local pâtisserie filled with beautiful, unique pastries—You're overwhelmed by choice.",
+                choices: [
+                    { text: "I'll let my partner pick.", next: "9.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "Check reviews online—let's see what other people say about this place.", next: "9.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Ask the owner for their favorite—you're in adventure mode.", next: "9.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "9.1": {
+                scenario: "It's 8 PM in London and you're both starving. You arrive at a busy bistro—there's a 45-minute wait for a table. Your partner suggests grabbing something nearby instead.",
+                choices: [
+                    { text: "But this place looks so cozy and romantic! Can't we just wait? I really had my heart set on this.", next: "10.1", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "45 minutes is too long when we're this hungry. Let's find somewhere nearby - we'll eat sooner and avoid the crowd.", next: "10.1", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's wander and see what we discover! Maybe we'll find some hidden gem or street food we never would have tried otherwise.", next: "10.1", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "9.2": {
+                scenario: "It's 8 PM in Paris and you're both starving. You arrive at a busy bistro—there's a 45-minute wait for a table. Your partner suggests grabbing something nearby instead.",
+                choices: [
+                    { text: "But this place looks so cozy and romantic! Can't we just wait? I really had my heart set on this.", next: "10.2", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "45 minutes is too long when we're this hungry. Let's find somewhere nearby - we'll eat sooner and avoid the crowd.", next: "10.2", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Let's wander and see what we discover! Maybe we'll find some hidden gem or street food we never would have tried otherwise.", next: "10.2", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "10.1": {
+                scenario: "It's nearly midnight and you're both getting tired. You could head back to your hotel, but there's a late-night Thames boat tour departing in 15 minutes, or a 24-hour diner that locals say has the best breakfast in London.",
+                choices: [
+                    { text: "A moonlit boat ride sounds so dreamy! Even though we're tired, imagine how romantic the city lights will look from the water!", next: "end", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "We've had a full day and need rest for tomorrow's plans. Let's head back to the hotel and get proper sleep.", next: "end", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "Local diner at midnight? That's where we'll find the real London experience! Who knows what characters we'll meet there.", next: "end", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            },
+            "10.2": {
+                scenario: "After dinner, you walked past a late-night cinema showing a classic film that starts in 10 minutes, while across the street there's a 24-hour arcade that looks surprisingly fun and retro.",
+                choices: [
+                    { text: "Ooh, a classic film sounds so romantic! We could snuggle in the dark theater - that feels perfect after dinner together.", next: "end", scores: { emotional: 2, logical: 0, exploratory: 0 } },
+                    { text: "The movie starts in 10 minutes, so we'd have to rush and might miss the beginning. The arcade has no time pressure - better choice.", next: "end", scores: { emotional: 0, logical: 2, exploratory: 0 } },
+                    { text: "An arcade? When's the last time we played old-school games? Let's see what weird vintage stuff they have in there!", next: "end", scores: { emotional: 0, logical: 0, exploratory: 2 } }
+                ]
+            }
+        };
+
+        // Archetype definitions
+        const archetypes = [
+            { name: "Intellectual", logical: 9, emotional: 2, exploratory: 6 },
+            { name: "Achiever", logical: 8, emotional: 4, exploratory: 5 },
+            { name: "Leader", logical: 7, emotional: 6, exploratory: 5 },
+            { name: "Explorer", logical: 3, emotional: 5, exploratory: 10 },
+            { name: "Rebel", logical: 4, emotional: 6, exploratory: 9 },
+            { name: "Peacemaker", logical: 5, emotional: 8, exploratory: 2 },
+            { name: "Dreamer", logical: 2, emotional: 9, exploratory: 8 },
+            { name: "Caregiver", logical: 3, emotional: 10, exploratory: 2 }
+        ];
+
+        // Vulnerability mappings
+        const vulnerabilityMappings = {
+                    "Achiever": [
+                {
+                    title: "THE TRAGIC PROFESSOR",
+                    characters: ["Severus Snape (Harry Porter)"],
+                    why: "His intelligence matches yours. His tragic backstory triggers your fixer instinct. You see the pain behind his cold exterior and know you could  be the one to finally heal him",
+                    plotTwist: "He's not looking for love. He's looking for someone to witness his eternal suffering. You'll compete with a dead woman, exhaust yourself trying to heal wounds he doesnt want healed, and become Chapter 394 of 'Why Lily?'",
+                    blindSpot: " You think your love can finally heal his decades-old wounds. But he's not looking for healing - he's looking for someone to witness his eternal suffering.",
+                    punchline: "Your achiever personality makes you believe you can fix him through excellence.You can't."
+                },
+                {
+                    title: "THE DIVORCE COLLECTOR",
+                    characters: ["Ross Geller (Friends)"],
+                    why: "He'll bond with you over his divorce stories and career disappointments, making you feel needed. His vulnerability and desire for stable love seems genuine and touching.",
+                    plotTwist: "Divorce Count: Every ex was the problem. We Were On Break: Never accepts responsibility. Victim Vocabulary: Life happens TO him.",
+                    blindSpot: "You think you'll be the one who finally works out. But in his mind, the next divorce story is already being written.",
+                    punchline: "You thought you were wife #4. You were just future divorce #4."
+                },
+                {
+                    title: "THE WANDERING ARTIST",
+                    characters: ["An Sheng"],
+                    why: "She'll share her troubled childhood and artistic struggles, making you want to protect her creative spirit. Her wild vulnerability and deep emotional needs feel poetic.",
+                    plotTwist: "July's Shadow: Best friend trauma defines her. Wandering Wound: Runs to create new victim stories. Letter Living: Writes pain, won't heal it.",
+                    blindSpot: "You think you can give her the stability she needs. But she's addicted to the chaos that fuels her art.",
+                    punchline: "You wanted to be her muse. You became her next sad poem."
+                },
+                {
+                    title: "THE GHOST VALLEY PRINCE",
+                    characters: ["Wen Kexing"],
+                    why: "He'll reveal his tragic ghost valley past gradually, making you feel special for earning his trust. His pain mixed with charisma creates irresistible broken bird syndrome.",
+                    plotTwist: "Valley Ghosts: Past crimes become sob stories. Revenge Romance: Uses you for sympathy while plotting. Mask Collection: Different victim for each face.",
+                    blindSpot: "You think you're seeing his real face. But even his vulnerability is a carefully crafted performance.",
+                    punchline: "You thought you knew all his ghosts. You were just meeting ghost #37."
+                },
+                {
+                    title: "THE SECOND LEAD SYNDROME",
+                    characters: ["Baek In-ho"],
+                    why: "He'll share his family abandonment and betrayals, making you want to be his first real support. His musical talent and fighter spirit despite hardships inspire protectiveness.",
+                    plotTwist: "Piano Hands: Every injury is someone's fault. Sister Issues: Family dysfunction excuses everything. Second Lead: Professional victim in love triangles.",
+                    blindSpot: "You think you can finally put him first. But he's comfortable in second place - it's safer to lose than to risk winning.",
+                    punchline: "You tried to make him the main character. He rewrote you as another villain."
+                },
+                {
+                    title: "THE REVENGE PLANNER",
+                    characters: ["Kang Moo"],
+                    why: "He'll confide about his tragic past and trust issues, making you feel like his emotional savior. His vulnerability beneath tough exterior triggers rescue instincts.",
+                    plotTwist: "Revenge List: Past hurts justify present hurting. Trust Tests: Makes you prove you're different. Victim Olympics: His pain always wins.",
+                    blindSpot: "You think you're helping him heal. He's just recruiting you for his revenge sequel.",
+                    punchline: "You thought you were his redemption arc. You were just revenge subplot B."
+                },
+                {
+                    title: "THE TRAUMATIZED FIGHTER",
+                    characters: ["Type"],
+                    why: "He'll reveal his childhood trauma gradually, making you feel trusted with his deepest pain. His struggle to overcome past while showing moments of tenderness hooks you.",
+                    plotTwist: "Trauma Trump: His past excuses all behavior. Homophobic Shield: Uses pain to justify prejudice. Anger Rights: Trauma means he can lash out.",
+                    blindSpot: "You think love can heal his wounds. But he uses those wounds as weapons.",
+                    punchline: "You offered him healing. He preferred staying broken - it came with more benefits."
+                },
+                {
+                    title: "THE SELF-DESTRUCTIVE GENIUS",
+                    characters: ["Kabir Singh"],
+                    why: "He'll show you his self-destructive spiral after heartbreak, making you feel essential to his survival. His passionate intensity and medical brilliance make saving him seem worthwhile.",
+                    plotTwist: "Alcoholic Arithmetic: Drinks equal pain level. Scalpel Sharp: Cuts others while bleeding. Preeti Projection: You're responsible for his healing.",
+                    blindSpot: "You think you can love him back to stability. But destruction is his comfort zone.",
+                    punchline: "You tried to be his cure. He preferred staying terminal."
+                },
+                {
+                    title: "THE OBSESSIVE ROMANTIC",
+                    characters: ["Rahul"],
+                    why: "He'll share his lonely childhood and rejection stories, making his obsessive love seem like desperate need for connection. His vulnerability and artistic nature trigger sympathy.",
+                    plotTwist: "K-K-K-Kiran: Stutters excuses for stalking. Rejection Collection: Lists everyone who hurt him. Victim Violin: Plays sad songs literally.",
+                    blindSpot: "You think you can heal his fear of abandonment. But he abandons himself first, then blames you for the loss.",
+                    punchline: "You thought you were his happy ending. You were just the next name in his rejection collection."
+                },
+                {
+                    title: "THE JUSTIFIED CRIMINAL",
+                    characters: ["Pablo Escobar"],
+                    why: "He'll tell stories of his impoverished childhood and system oppression, making his empire seem like justified rebellion. His devotion to family despite circumstances seems noble.",
+                    plotTwist: "Poor Pablo: Billions can't heal childhood. System Victim: Government made him criminal. Family Man: Uses kids to excuse killings.",
+                    blindSpot: "You think you see the good man beneath the crime lord. But the crime lord IS the man.",
+                    punchline: "You thought you were his reason to go straight. You were his excuse to stay crooked."
+                }
+            ],
+    
+            "Intellectual": [
+                {
+                    characters: ["Rorschach (Watchmen)"],
+                    why: "He'll share his uncompromising vision of justice with you, making you the one person who truly understands his black-and-white worldview. His dedication to truth and protection of the innocent makes you feel morally aligned.",
+                    plotTwist: "Moving Inkblots: Sees threats in every shadow. Never Compromise: Even happiness is suspicious. Journal Entries: Documents your 'betrayals' obsessively.",
+                    blindSpot: "You think you're his moral compass. But his compass only points to paranoia - and you're just another conspiracy.",
+                    punchline: "You thought you were his exception. You were just evidence file #47."
+                },
+                {
+                    characters: ["Dale Gribble (King of the Hill)"],
+                    why: "He'll protect you from all the conspiracies only he can see, building underground bunkers and safe houses for your future together. His preparedness and unique worldview make life feel like an adventure.",
+                    plotTwist: "Pocket Sand: Attacks first, asks questions never. Alias Addiction: Rusty Shackleford handles the emotions. Bug Exterminator: Treats feelings like infestations.",
+                    blindSpot: "You think his paranoia is quirky. But when he suspects you, there's no bunker deep enough to hide his distrust.",
+                    punchline: "You thought you were his partner. You were just another government plant."
+                },
+                {
+                    characters: ["L (Death Note)"],
+                    why: "He'll make you his sole trusted ally in solving impossible cases, sharing sweets and secrets while creating a unique bond. His genius-level intellect and quirky habits make you feel specially chosen.",
+                    plotTwist: "Percentage Trust: Calculates exact suspicion levels. Sugar Surveillance: Watches you even during intimate moments. Handcuff Test: Literally chains you to prove loyalty.",
+                    blindSpot: "You think you're Watson to his Holmes. But you're just another suspect with a 73.6% probability of betrayal.",
+                    punchline: "You thought you passed his tests. He was just gathering more data."
+                },
+                {
+                    characters: ["Ling Yao (Fullmetal Alchemist)"],
+                    why: "He'll include you in his quest for immortality and throne, trusting you with ancient secrets while keeping everyone else at arm's length. His royal ambitions and protective nature make you feel essential.",
+                    plotTwist: "Greed Possession: Literally has demon trust issues. Clan Testing: Your loyalty needs constant proof. Emperor Paranoia: Power makes him suspect everyone.",
+                    blindSpot: "You think you're his empress. But in his game of thrones, everyone's expendable - even queens.",
+                    punchline: "You thought you shared his throne. You were just keeping it warm."
+                },
+                {
+                    characters: ["K (Secret Garden)"],
+                    why: "He'll share his corporate secrets and family burdens with you alone, making you his sanctuary from a hostile world. His success despite trust issues makes you feel uniquely special.",
+                    plotTwist: "Tracksuit Tracking: Monitors your every move. Chaebol Conspiracy: Sees corporate spies everywhere. Memory Wipe: Wishes he could forget betrayals.",
+                    blindSpot: "You think you're his safe space. But he's installed cameras in the sanctuary too.",
+                    punchline: "You thought you were his peace. You were his most monitored project."
+                },
+                {
+                    characters: ["Win (Hormones)"],
+                    why: "He'll confide his family pressures and social anxieties only to you, making you his emotional anchor. His vulnerability beneath popular exterior creates intimate connection.",
+                    plotTwist: "Social Surveillance: Tracks all your interactions. Trust Levels: Friends ranked by threat level. Backup Plans: Always has exit strategy.",
+                    blindSpot: "You think you're helping him open up. He's just calculating the safest amount of vulnerability to show.",
+                    punchline: "You thought you were his confidence. You were his contingency plan."
+                },
+                {
+                    characters: ["Inspector Vijay (Bollywood archetype)"],
+                    why: "He'll make you his safe haven from the corrupt system he fights daily, sharing case details and trusting your counsel. His dedication to justice despite betrayals makes you feel valued.",
+                    plotTwist: "System Suspicion: Everyone's potentially corrupt. Uniform Only: Can't trust without badge. Evidence Everything: Needs proof of love.",
+                    blindSpot: "You think you're his partner in justice. But he's building a case file on your loyalty too.",
+                    punchline: "You thought you were his witness. You were suspect number one."
+                },
+                {
+                    characters: ["Vikram Rathod (Fighter)"],
+                    why: "He'll protect you from his dangerous world while questioning everyone who approaches you, making you feel precious but isolated. His military background creates constant vigilance.",
+                    plotTwist: "Combat Ready: Sees threats in shadows. Mission Mindset: Love is another operation. Trust Exercises: Tests you like recruit.",
+                    blindSpot: "You think his protection is love. It's just another perimeter to defend.",
+                    punchline: "You thought you were his peace. You were his most guarded asset."
+                },
+                {
+                    characters: ["El Professor (Money Heist)"],
+                    why: "He'll include you in elaborate plans while maintaining strict compartmentalization, making you feel trusted yet controlled. His brilliant strategies for everything make life feel orchestrated.",
+                    plotTwist: "Plan Obsession: Relationships need blueprints. Code Names: Real names mean vulnerability. Exit Routes: Always plans for betrayal.",
+                    blindSpot: "You think you're part of his master plan. You're just another contingency he's calculated for.",
+                    punchline: "You thought you were Tokyo. You were just Part 5 of his exit strategy."
+                },
+                {
+                    characters: ["Diego (Narcos)"],
+                    why: "He'll share classified information while constantly checking for surveillance, making your relationship feel like a thriller. His dedication to justice creates bunker mentality.",
+                    plotTwist: "Wire Tapping: Assumes everyone's listening. Cartel Paranoia: Enemies everywhere. Trust No One: Except you, maybe.",
+                    blindSpot: "You think you're his informant of the heart. But he's always waiting for you to flip.",
+                    punchline: "You thought you were undercover in love. He never stopped investigating."
+                }
+            ],
+
+            "Leader": [
+                {
+                    characters: ["Cersei Lannister (Game of Thrones)"],
+                    why: "She'll make you feel like royalty with intimate wine sessions, sharing palace secrets that make you her only trusted confidant. Her protective instincts and elegant charm create an intoxicating sense of being chosen.",
+                    plotTwist: "Poison Sweet: Compliments laced with hidden barbs. Silent Treatment: Withdraws affection as punishment. Smile Assassin: Destroys rivals while holding your hand.",
+                    blindSpot: "You think you're sharing her throne. But there's only room for one queen, and she's already wearing the crown.",
+                    punchline: "You thought you were her equal. You were just her most useful pawn."
+                },
+                {
+                    characters: ["Tom Ripley (The Talented Mr. Ripley)"],
+                    why: "He'll study everything you love and become your perfect companion, showing up with thoughtful gifts and sharing your exact interests. His dedication to understanding you feels like destiny.",
+                    plotTwist: "Identity Thief: Becomes you to control you. Basement Secrets: His real self stays buried. Friendly Fire: Eliminates threats with a smile.",
+                    blindSpot: "You think he's your soulmate. He's just wearing your soul like a perfectly tailored suit.",
+                    punchline: "You thought you found your match. You found your replacement."
+                },
+                {
+                    characters: ["Xu Xian (White Snake)"],
+                    why: "He'll be the gentle scholar who writes you poetry and tends to you with medicinal herbs, creating a peaceful life where he quietly manages everything 'for your own good.'",
+                    plotTwist: "Medicine Man: Doses your independence away. Gentle Jailer: Soft words hide hard control. Snake Phobia: Makes you hide your true nature.",
+                    blindSpot: "You think his care is love. It's sedation disguised as salvation.",
+                    punchline: "You thought he was healing you. He was just prescribing smaller cages."
+                },
+                {
+                    characters: ["Cao Cao (Three Kingdoms)"],
+                    why: "He'll recognize your talents and make you his valued advisor, sharing late night strategy sessions where your intelligence is finally appreciated. His ambition includes building an empire with you.",
+                    plotTwist: "Puppet Emperor: You rule in name only. Wine Test: Every gift tests your loyalty. Suspicious Mind: Questions every friendship you have.",
+                    blindSpot: "You think you're his strategist. You're just another territory to conquer.",
+                    punchline: "You thought you were writing history together. You were just a footnote in his."
+                },
+                {
+                    characters: ["Joo Dan-tae (Penthouse)"],
+                    why: "He'll place you in the penthouse of his life, arranging everything from your wardrobe to your social calendar while making it seem like pampering. His wealth ensures your every material desire.",
+                    plotTwist: "Penthouse Prison: Luxury cage is still cage. Classical Control: Your life orchestrated like his symphonies. Revenge Romance: Uses you against his enemies.",
+                    blindSpot: "You think the gilded cage is paradise. But golden bars are still bars.",
+                    punchline: "You thought you lived in a penthouse. You lived in a pretty cell."
+                },
+                {
+                    characters: ["Khun Saran (Hua Jai Sila)"],
+                    why: "He'll court you with traditional grace and modern luxury, always knowing exactly what you need before you ask. His intuitive care makes you feel deeply understood and cherished.",
+                    plotTwist: "Velvet Manipulation: Controls through comfort. Silent Storms: Never argues, just punishes quietly. Family Weapon: Uses your loved ones as leverage.",
+                    blindSpot: "You think his anticipation is attentiveness. It's surveillance with a smile.",
+                    punchline: "You thought he read your mind. He was writing it."
+                },
+                {
+                    characters: ["Arnav Singh Raizada (Iss Pyaar Ko Kya Naam Doon)"],
+                    why: "He'll challenge you intellectually while secretly ensuring your success, pulling strings behind the scenes to help your career. His hidden support makes achievements feel earned yet blessed.",
+                    plotTwist: "Contract Love: Relationships have terms and conditions. Silent Punishment: Disappears when displeased. Puppet Master: Your success has his strings attached.",
+                    blindSpot: "You think your success is yours. Every achievement has his fingerprints on it.",
+                    punchline: "You thought you climbed the ladder. He was moving it rung by rung."
+                },
+                {
+                    characters: ["Komolika (Kasautii Zindagii Kay)"],
+                    why: "She'll become your best friend and biggest supporter, always there with solutions to problems she secretly created. Her devotion seems unshakeable as she removes every obstacle from your path.",
+                    plotTwist: "Problem Creator: Manufactures issues to solve. Sindoor Sabotage: Religious manipulation tactics. Sweet Poison: Kills relationships with kindness.",
+                    blindSpot: "You think she's solving your problems. She's the author of every crisis.",
+                    punchline: "You thought she was your guardian angel. She was the devil in designer wear."
+                },
+                {
+                    characters: ["El Patrón (Narcos)"],
+                    why: "He'll treat you like a queen with private jets, personal zoos, and devoted attention while never directly showing his darker side. His family values and protectiveness feel absolute.",
+                    plotTwist: "Silver or Lead: Choices that aren't choices. Gift Bombs: Every present has hidden cost. Soft Power: Controls through comfort not conflict.",
+                    blindSpot: "You think his generosity is love. Every gift is a golden chain.",
+                    punchline: "You thought you were his queen. You were his most prized possession."
+                },
+                {
+                    characters: ["Lucrecia Montesinos (Elite)"],
+                    why: "She'll include you in her exclusive world of galas and yacht parties, defending you fiercely in public while subtly reshaping you in private. Her sophistication makes criticism feel like care.",
+                    plotTwist: "Champagne Problems: Creates issues from nothing. Scholarship Shame: Makes you grateful for basic respect. Elite Erasure: Your past becomes embarrassing.",
+                    blindSpot: "You think she's polishing you. She's erasing everything that made you unique.",
+                    punchline: "You thought you joined the elite. You just lost yourself at a better address."
+                },
+                {
+                    characters: ["Angela Darmody (Oz Nigeria)"],
+                    why: "She'll support your dreams while carefully curating which ones succeed, using her connections to open certain doors while invisibly closing others. Her networking makes you feel powerful.",
+                    plotTwist: "Jollof Politics: Feeds you while starving autonomy. Aso-ebi Manipulation: Includes you to control you. Soft Elimination: Rivals disappear 'naturally.'",
+                    blindSpot: "You think she's opening doors. She's just deciding which rooms you're allowed in.",
+                    punchline: "You thought you had connections. You had a very sophisticated leash."
+                },
+                {
+                    characters: ["Thandiwe (The River)"],
+                    why: "She'll share her business empire with you, making you feel like an equal partner while subtly ensuring every decision goes through her. Her mentorship feels empowering.",
+                    plotTwist: "Diamond Pressure: Polishes you into her design. Boardroom Bedroom: Business tactics in intimate moments. Quiet Veto: Your ideas die in committee.",
+                    blindSpot: "You think you're being mentored. You're being manufactured to her specifications.",
+                    punchline: "You thought you were a partner. You were a subsidiary she acquired."
+                }
+            ],
+            "Explorer": [
+                {
+                    characters: ["BoJack Horseman (BoJack Horseman)"],
+                    why: "He'll share his deepest vulnerabilities and traumas with you, making you feel like the one person who truly understands him. His moments of clarity and genuine emotion create a deep connection.",
+                    plotTwist: "Substance Carousel: Different drug for every feeling. Blame Cycle: Your support enables his destruction. Empty Gestures: Grand apologies, no real change.",
+                    blindSpot: "You think you're his lifeline. You're just another audience member for his self-destruction show.",
+                    punchline: "You thought you were his rock. You were just another thing to hit bottom with."
+                },
+                {
+                    characters: ["Frank Gallagher (Shameless)"],
+                    why: "He'll charm you with wild stories and unexpected wisdom, making you feel like you're on an adventure. His charisma and survival skills make chaos feel exciting.",
+                    plotTwist: "Blackout Romance: Forgets promises when sober. Family Scammer: Uses kids to manipulate you. Rock Bottom Tourist: Visits but never stays.",
+                    blindSpot: "You think his chaos is colorful. It's just destruction with good PR.",
+                    punchline: "You thought you were his partner in crime. You were just collateral damage."
+                },
+                {
+                    characters: ["Chen Yong (Burning Ice)"],
+                    why: "He'll be the brilliant but troubled soul who shares his artistic vision with you between highs and lows. His creative genius during good moments makes you feel inspired.",
+                    plotTwist: "Ice and Fire: Frozen withdrawal or burning excess. Art Excuse: Addiction is his 'creative process.' Memory Gaps: Forgets your important moments.",
+                    blindSpot: "You think you're his muse. You're just another high he's chasing.",
+                    punchline: "You thought you inspired his art. You were just material for his tragedy."
+                },
+                {
+                    characters: ["Wong Kar-wai's Characters (2046)"],
+                    why: "He'll romance you in smoky jazz bars and neon nights, making every encounter feel like a beautiful film. His poetic soul and aesthetic lifestyle feel intoxicating.",
+                    plotTwist: "2046 Loop: Stuck in past, can't reach future. Whiskey Words: Only honest when drinking. Time Zones: Lives in different reality.",
+                    blindSpot: "You think you're living in a romance film. It's a cautionary tale on repeat.",
+                    punchline: "You thought you were his leading lady. You were just another deleted scene."
+                },
+                {
+                    characters: ["Kim Woo-jin (Uncontrollably Fond)"],
+                    why: "He'll pursue you with reckless abandon, making grand romantic gestures while battling his demons. His vulnerability mixed with passion creates an intense connection.",
+                    plotTwist: "Terminal Romance: Uses crisis for manipulation. Soju Confessions: Truth only comes bottled. Documentary Life: Records love but can't live it.",
+                    blindSpot: "You think his intensity is passion. It's just another form of addiction.",
+                    punchline: "You thought you were his reason to live. You were his excuse to keep dying."
+                },
+                {
+                    characters: ["Yoon Se-ri's Ex (Crash Landing on You)"],
+                    why: "He'll wine and dine you at exclusive clubs, sharing his business dreams between champagne toasts. His high-flying lifestyle and confidence make you feel elevated.",
+                    plotTwist: "Chaebol Champagne: Success measured in bottles. Deal Breaker: Every relationship is transaction. Penthouse Plunge: Highs and lows match building height.",
+                    blindSpot: "You think you're living the high life. You're just enabling his high life.",
+                    punchline: "You thought you were his first class. You were just another crash landing."
+                },
+                {
+                    characters: ["Metin (Ethos/Bir Başkadır)"],
+                    why: "He'll be the mysterious musician who understands your soul, creating beautiful moments between his struggles. His depth and talent make you feel like his muse.",
+                    plotTwist: "Raki Reality: Different person in each glass. Istanbul Nights: Disappears into city's darkness. Song Cycles: Creativity tied to substance.",
+                    blindSpot: "You think you're harmonizing. You're just another sad song he'll write.",
+                    punchline: "You thought you were his symphony. You were just background noise to his solo."
+                },
+                {
+                    characters: ["Devdas (Devdas)"],
+                    why: "He'll love you with poetic intensity, making you feel like his one true love while drowning his sorrows. His passionate declarations and family tragedy make you want to save him.",
+                    plotTwist: "Chandramukhi Complex: Loves ideal, not reality. Bottle Beloved: Alcohol becomes third partner. Paro Punishment: Uses your name to self-destruct.",
+                    blindSpot: "You think you're his Paro. But Paro was lucky - she got away.",
+                    punchline: "You thought you were his love story. You were his favorite excuse to drink."
+                },
+                {
+                    characters: ["Circuit (Munna Bhai MBBS - dark version)"],
+                    why: "He'll be the lovable rogue who makes you laugh while his habits spiral. His charm and street smarts make you overlook the growing problems.",
+                    plotTwist: "Tapori Tragedy: Street life excuses addiction. Medical Masala: Fake fixes for real problems. Jadoo Ki Jhappi: Hugs don't heal addiction.",
+                    blindSpot: "You think his humor is coping. It's just another way to avoid reality.",
+                    punchline: "You thought laughter was the best medicine. He overdosed on that too."
+                },
+                {
+                    characters: ["El Indio (For a Few Dollars More)"],
+                    why: "He'll serenade you with his pocket watch melody while lost in opium dreams, making you feel like his anchor to reality. His mysterious pain makes you want to heal him.",
+                    plotTwist: "Musical Trigger: Uses songs to justify using. Western Wasteland: Leaves emotional ghost towns. Revenge Romance: Past trauma excuses present chaos.",
+                    blindSpot: "You think you're his salvation. You're just another ghost in his haunted western.",
+                    punchline: "You thought you stopped his music box. It plays on loop in his head."
+                },
+                {
+                    characters: ["Tony Montana (Scarface)"],
+                    why: "He'll promise you the world while building his empire, making you his queen in a palace of excess. His ambition and protection feel absolute until the powder takes over.",
+                    plotTwist: "Mountain High: Cocaine confidence isn't real. Paranoid Paradise: Luxury becomes prison. Say Hello: Violence escalates with usage.",
+                    blindSpot: "You think you're his queen. You're just another possession in his crumbling kingdom.",
+                    punchline: "You thought you were his world. His world was always white powder."
+                },
+                {
+                    characters: ["Agu (Beasts of No Nation - adult version)"],
+                    why: "He'll share his war trauma while self-medicating, making you feel like his path to peace. His survival story and need for comfort create deep empathy.",
+                    plotTwist: "War Wounds: Uses past to excuse present. Brown Brown: Mixes substances for courage. Child Soldier: Never learned healthy coping.",
+                    blindSpot: "You think you're helping him heal from war. He's still fighting battles in his head.",
+                    punchline: "You thought you were his peacetime. He never left the battlefield."
+                }
+            ],
+            "Rebel": [
+                {
+                    title: "THE WALKING TED TALK",
+                    characters: ["Tony Stark", "Light Yagami", "Sherlock Holmes", "Grand Admiral Thrawn"],
+                    why: "You love brilliance. You're drawn to people who seem like they have all the answers.",
+                    plotTwist: "They're not sharing wisdom. They're building a fanbase with you as audience #1.",
+                    blindSpot: "You confuse charisma with character. Intelligence ≠ emotional safety.",
+                    punchline: "You thought you met a genius. You met a god complex in a hoodie."
+                },
+                {
+                    title: "THE DANGEROUS CHARMER",
+                    characters: ["Damon Salvatore", "Chuck Bass", "James Bond", "Casanova"],
+                    why: "They're smooth, magnetic, and just the right amount of broken. You love the rush.",
+                    plotTwist: "They don't want connection. They want conquest.",
+                    blindSpot: "You think you're the exception. You're actually chapter 12.",
+                    punchline: "You called it chemistry. They called it Tuesday."
+                }
+            ],
+            "Peacemaker": [
+                {
+                    title: "THE RULEBOOK ROMANTIC",
+                    characters: ["Captain Holt", "Coach Carter", "Major Kuldeep Singh", "Captain Levi"],
+                    why: "You love structure. Rules make you feel safe. And when they say 'discipline is love'—you believe it.",
+                    plotTwist: "It's not structure. It's control dressed up in duty.",
+                    blindSpot: "You mistake rigidity for reliability. But love shouldn't feel like a training camp.",
+                    punchline: "You thought it was devotion. It was just daily inspection with hugs."
+                },
+                {
+                    title: "THE DANGEROUS CHARMER",
+                    characters: ["Damon Salvatore", "Chuck Bass", "James Bond", "Casanova"],
+                    why: "They're smooth, magnetic, and just the right amount of broken. You love the rush.",
+                    plotTwist: "They don't want connection. They want conquest.",
+                    blindSpot: "You think you're the exception. You're actually chapter 12.",
+                    punchline: "You called it chemistry. They called it Tuesday."
+                }
+            ],
+            "Dreamer": [
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                },
+                {
+                    title: "THE CASTLE BUILDER",
+                    characters: ["Ted Mosby", "Nate", "Christian", "Tommy Shelby"],
+                    why: "They say all the right things. Future vacations, babies, matching tattoos—you melt.",
+                    plotTwist: "They dream big, but disappear when it's time to act.",
+                    blindSpot: "You confuse words with plans. Dreams with dates.",
+                    punchline: "You packed your bags. They were just daydreaming."
+                }
+            ],
+            "Caregiver": [
+                {
+                    title: "THE CHARMING MANIPULATOR",
+                    characters: ["Loki", "Klaus Mikaelson", "Light Yagami", "Azula"],
+                    why: "They're smart. They're intense. They say deep stuff like 'no one really knows me' and you're like... 'I will.' They cry once and suddenly you're emotionally adopted.",
+                    plotTwist: "They're not being vulnerable. They're being strategic. You think you're connecting. They're just testing which guilt-trip works best.",
+                    blindSpot: "You confuse 'drama' with 'depth.' You think you're healing them. Actually… you're stuck in Season 6 of their emotional soap opera.",
+                    punchline: "You met Loki. Thought it was love. It was a plot twist."
+                },
+                {
+                    title: "THE TRAGIC HERO",
+                    characters: ["BoJack Horseman", "Eeyore", "Werther", "Rue Bennett"],
+                    why: "You're compassionate. You want to help, to rescue, to love someone back to life.",
+                    plotTwist: "They don't want change. They want sympathy on tap.",
+                    blindSpot: "You think you're their lifeline. But they keep pulling you under.",
+                    punchline: "You brought the life raft. They popped it with feelings."
+                }
+            ]
+        };
+
+        // Archetype trait descriptions
+        const archetypeTraits = {
+            "Intellectual": {
+                description: "You possess a highly analytical approach to life, keenly examining and dissecting information to understand things thoroughly. You have an insatiable curiosity and a deep thirst for knowledge that drives you to continuously learn and expand your understanding. You rely heavily on logic and rationality, preferring to make decisions based on facts and reasoned arguments rather than emotions. You're introspective and detail-oriented, often spending significant time in self-reflection and striving for accuracy in your endeavors."
+            },
+            "Achiever": {
+                description: "You are highly driven to succeed and set lofty goals that you're determined to achieve. You have a strong desire to outperform others and seek recognition through your accomplishments. You're well-organized, meticulous in planning, and value efficiency. Your identity is closely tied to your professional achievements, and you possess an exceptional ability to concentrate on your goals. You're willing to take calculated risks and show strong resilience in recovering from setbacks."
+            },
+            "Leader": {
+                description: "You have a strong sense of self-assurance and believe in your abilities to make decisions and lead others. You're known for making decisions efficiently under pressure and expressing your views assertively. You possess natural charisma that attracts and motivates others, combined with high emotional intelligence. You're a strategic thinker who can plan for the long-term, and you exhibit a strong sense of ethics and integrity that sets a moral example for others."
+            },
+            "Explorer": {
+                description: "You are driven by a desire to explore and engage with new and diverse experiences. You're often seen as a thrill-seeker who relishes novel situations. You possess high levels of energy and enthusiasm, especially when pursuing activities that excite you. Your spontaneous nature means you often act on impulse, and you exhibit a fearless attitude, willing to take risks others might avoid. You're typically very adaptable, able to adjust to new environments with ease."
+            },
+            "Rebel": {
+                description: "You value your independence highly and seek autonomy in your actions and decisions. You resist conforming to societal norms and often question traditional ways of doing things. You're naturally skeptical of authority and have a well-developed sense of justice, willing to fight for causes you believe in. You think outside the box and bring unconventional ideas to the table. Your non-conformist nature makes you seem unpredictable at times, but you're driven by idealism and principle."
+            },
+            "Peacemaker": {
+                description: "You are naturally inclined towards maintaining harmony and balance in your environment. You prioritize peace over conflict and often go to great lengths to avoid upsetting situations. You're highly empathetic and capable of understanding others' feelings deeply. You possess a natural talent for diplomacy, often mediating disputes and helping resolve conflicts. You're patient, supportive, and nurturing, providing a calming presence to those around you."
+            },
+            "Dreamer": {
+                description: "You are driven by a strong sense of vision and ideals, with lofty goals to make a significant impact. Your outlook on life is generally positive, seeing the best in people and focusing on possibilities. You possess a creative and imaginative mind, thinking outside the box and coming up with innovative ideas. You're introspective and emotionally sensitive, feeling emotions deeply and connecting with people on a profound level. Your actions are guided by ideals rather than practical considerations."
+            },
+            "Caregiver": {
+                description: "You have an inherent desire to care for and nurture others, often putting their needs before your own. You're deeply empathetic and attuned to others' emotions and needs. You exhibit genuine concern for others' welfare and are often involved in helping activities. You show deep compassion and understanding, especially towards those in need. Others see you as reliable and dependable, often turning to you for emotional and practical support."
+            }
+        };
+        let demographics = { ethnicity: '', orientation: '' };
+        let currentQuestion = "1";
+        let scores = { emotional: 0, logical: 0, exploratory: 0 };
+        let selectedChoices = new Set();
+        let multiSelectNexts = [];
+        let pendingQuestions = [];
+        let isInMultiSelectSequence = false;
+        let multiSelectProgress = 0;
+
+        // Start quiz function
+        // Modified start quiz function to show demographics first
+        function startJourney() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('demographics-screen').style.display = 'block';
+        }
+        document.addEventListener('mousemove', (e) => {
+            const icons = document.querySelectorAll('.floating-icon');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            icons.forEach((icon, index) => {
+                const speed = (index + 1) * 2;
+                icon.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
+            });
+        });
+
+        // New function to store demographics and start the actual quiz
+        function startActualQuiz() {
+            // Get the selected values
+            const ethnicity = document.getElementById('ethnicity-select').value;
+            const orientation = document.getElementById('orientation-select').value;
+            
+            // Check if both are selected
+            if (!ethnicity || !orientation) {
+                alert('Please select both fields to continue');
+                return;
+            }
+            
+            // Store the values (you can use these later)
+            demographics.ethnicity = ethnicity;
+            demographics.orientation = orientation;
+            
+            // Hide demographics screen and show quiz
+            document.getElementById('demographics-screen').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            
+            // Reset quiz state and start
+            currentQuestion = "1";
+            scores = { emotional: 0, logical: 0, exploratory: 0 };
+            selectedChoices.clear();
+            multiSelectNexts = [];
+            pendingQuestions = [];
+            isInMultiSelectSequence = false;
+            multiSelectProgress = 0;
+            
+            showQuestion(currentQuestion);
+        }   
+
+        // Show question function
+        function showQuestion(questionId) {
+            const question = questions[questionId];
+            const container = document.getElementById('question-content');
+            
+            let html = `<div class="question-container">`;
+            
+            // Add indicator if this is from a multi-select sequence
+            if (isInMultiSelectSequence) {
+                html += `<div style="text-align: center; color: #f39c12; margin-bottom: 20px; font-size: 0.9em;">Activity ${multiSelectProgress} of 2</div>`;
+            }
+            
+            html += `<div class="scenario">${question.scenario}</div>`;
+            
+            if (question.multiSelect) {
+                html += `<div class="multi-select-info">Select exactly ${question.multiSelect} options</div>`;
+            }
+            
+            html += `<div class="choices">`;
+            
+            question.choices.forEach((choice, index) => {
+                html += `<div class="choice" onclick="selectChoice('${questionId}', ${index})">${choice.text}</div>`;
+            });
+            
+            html += `</div>`;
+            html += `<button class="next-btn" id="next-btn" onclick="nextQuestion()" disabled>Continue</button>`;
+            html += `</div>`;
+            
+            container.innerHTML = html;
+            selectedChoices.clear();
+            multiSelectNexts = [];
+        }
+
+        // Select choice function
+        function selectChoice(questionId, choiceIndex) {
+            const question = questions[questionId];
+            const choice = question.choices[choiceIndex];
+            const choiceElements = document.querySelectorAll('.choice');
+            
+            if (question.multiSelect) {
+                // Multi-select logic
+                if (selectedChoices.has(choiceIndex)) {
+                    selectedChoices.delete(choiceIndex);
+                    choiceElements[choiceIndex].classList.remove('selected');
+                } else if (selectedChoices.size < question.multiSelect) {
+                    selectedChoices.add(choiceIndex);
+                    choiceElements[choiceIndex].classList.add('selected');
+                }
+                
+                // Enable/disable next button
+                document.getElementById('next-btn').disabled = selectedChoices.size !== question.multiSelect;
+            } else {
+                // Single select logic
+                choiceElements.forEach(el => el.classList.remove('selected'));
+                choiceElements[choiceIndex].classList.add('selected');
+                selectedChoices.clear();
+                selectedChoices.add(choiceIndex);
+                document.getElementById('next-btn').disabled = false;
+            }
+        }
+
+        // Next question function
+        function nextQuestion() {
+            const question = questions[currentQuestion];
+            let nextQuestionId = null;
+            
+            // Calculate scores
+            selectedChoices.forEach(index => {
+                const choice = question.choices[index];
+                scores.emotional += choice.scores.emotional;
+                scores.logical += choice.scores.logical;
+                scores.exploratory += choice.scores.exploratory;
+                
+                if (question.multiSelect) {
+                    multiSelectNexts.push(choice.next);
+                } else if (pendingQuestions.length === 0) {
+                    // Only set next if we don't have pending questions
+                    nextQuestionId = choice.next;
+                }
+            });
+            
+            // Handle multi-select navigation
+            if (question.multiSelect && multiSelectNexts.length > 0) {
+                // Start multi-select sequence
+                isInMultiSelectSequence = true;
+                multiSelectProgress = 1;
+                pendingQuestions = [...multiSelectNexts];
+                multiSelectNexts = [];
+                // Show the first selected question
+                nextQuestionId = pendingQuestions.shift();
+            } else if (pendingQuestions.length > 0) {
+                // Continue multi-select sequence
+                multiSelectProgress = 2;
+                nextQuestionId = pendingQuestions.shift();
+            } else {
+                // End multi-select sequence if we were in one
+                if (isInMultiSelectSequence) {
+                    isInMultiSelectSequence = false;
+                    multiSelectProgress = 0;
+                }
+                // Use the normal next question logic
+                if (!nextQuestionId) {
+                    const choiceIndex = [...selectedChoices][0];
+                    nextQuestionId = question.choices[choiceIndex].next;
+                }
+            }
+            
+            if (nextQuestionId === "end" || !questions[nextQuestionId]) {
+                showResults();
+            } else {
+                currentQuestion = nextQuestionId;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        // Calculate archetype
+        function calculateArchetype() {
+            let minDistance = Infinity;
+            let closestArchetype = null;
+            
+            archetypes.forEach(archetype => {
+                const distance = Math.sqrt(
+                    Math.pow(scores.logical - archetype.logical, 2) +
+                    Math.pow(scores.emotional - archetype.emotional, 2) +
+                    Math.pow(scores.exploratory - archetype.exploratory, 2)
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestArchetype = archetype;
+                }
+            });
+            
+            return closestArchetype;
+        }
+
+        // Show results
+                // Show results with swipe interface
+        function showResults() {
+            const archetype = calculateArchetype();
+            const vulnerabilities = vulnerabilityMappings[archetype.name] || [];
+            const traits = archetypeTraits[archetype.name] || { description: "" };
+            
+            // GA tracking (keep existing)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'quiz_completed', {
+                    'archetype': archetype.name,
+                    'emotional_score': scores.emotional,
+                    'logical_score': scores.logical,
+                    'exploratory_score': scores.exploratory,
+                    'ethnicity': demographics.ethnicity,
+                    'orientation': demographics.orientation
+                });
+            }
+            
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            
+            let html = `<div class="result-container">`;
+            
+            // Hook Section
+            html += `<div class="results-hero">`;
+            html += `<span class="journey-complete">✈️ Journey Complete</span>`;
+            html += `<h1 class="results-title">Your travel story is complete, but the real journey begins now...</h1>`;
+            html += `<p class="results-subtitle">`;
+            html += `Every choice you made - from picking Paris over London to how you handled `;
+            html += `conflicts - revealed something deeper about who you are and who you're `;
+            html += `drawn to in relationships.`;
+            html += `</p>`;
+            html += `</div>`;
+            
+            // Personality Reveal
+            html += `<div class="personality-reveal">`;
+            html += `<p class="personality-label">Your Travel Personality Revealed</p>`;
+            html += `<div class="personality-description">${traits.description}</div>`;
+            html += `<p style="text-align: center; margin-top: 20px; color: rgba(255, 255, 255, 0.7); font-style: italic;">`;
+            html += `These aren't just travel preferences. They're the patterns that shape every relationship you'll ever have.`;
+            html += `</p>`;
+            html += `</div>`;
+            
+            // Algorithm Match Reveal
+            html += `<div class="matches-intro">`;
+            html += `<div style="text-align: center; margin-bottom: 30px;">`;
+            html += `<h2 style="color: #f39c12; font-size: 1.8em; margin-bottom: 15px;">🔍 MATCH ANALYSIS COMPLETE</h2>`;
+            html += `<p style="font-size: 1.2em; line-height: 1.6;">`;
+            html += `Based on your personality traits, our algorithm found <strong>${vulnerabilities.length} matches</strong> who would `;
+            html += `find you irresistible. Not because you're compatible...<br><br>`;
+            html += `<strong style="color: #e74c3c;">But because you're exactly their type of target.</strong>`;
+            html += `</p>`;
+            html += `</div>`;
+            html += `</div>`;
+            
+            // Dating App Reveal
+            html += `<div class="dating-app-header">`;
+            html += `<h2 style="font-size: 1.5em; margin-bottom: 10px;">Welcome to <span style="color: #e74c3c;">ToxicMatch™</span></h2>`;
+            html += `<p style="font-style: italic; opacity: 0.8; margin-bottom: 20px;">"The dating app you never wanted to join"</p>`;
+            html += `<div style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin: 20px 0;">`;
+            html += `<span>⚠️ Warning: All profiles have been flagged for manipulative behavior</span>`;
+            html += `<span>💔 100% of matches will lovebomb you</span>`;
+            html += `<span>🚩 Hidden red flags revealed on scroll</span>`;
+            html += `</div>`;
+            html += `<div class="matches-count">`;
+            html += `<strong>${vulnerabilities.length} MATCHES WAITING</strong>`;
+            html += `</div>`;
+            html += `</div>`;
+            
+            // Swipe container with simplified cards
+            html += `<div class="swipe-container" id="swipeContainer">`;
+            html += `<div class="stack-indicator"></div>`;
+            html += `<div class="stack-indicator-2"></div>`;
+            
+            // Generate simplified cards
+            vulnerabilities.reverse().forEach((vuln, index) => {
+                const matchPercentage = 75 + Math.floor((scores.emotional + scores.logical + scores.exploratory + index * 3) % 25);
+                
+                // Character emojis mapping (keeping existing)
+                const characterEmojis = {
+                    "Severus Snape": "🧪",
+                    "Ross Geller": "🦕",
+                    "An Sheng": "✉️",
+                    "Wen Kexing": "🎭",
+                    "Cersei Lannister": "👑",
+                    "Tom Ripley": "🎩",
+                    "BoJack Horseman": "🐴",
+                    "Frank Gallagher": "🍺",
+                    "Tony Stark": "🤖",
+                    "Light Yagami": "📓",
+                    "Damon Salvatore": "🧛",
+                    "Captain Holt": "🚔",
+                    "Loki": "⚡",
+                    "Klaus Mikaelson": "🩸",
+                    "Ted Mosby": "🏗️",
+                    "Eeyore": "🌧️"
+                };
+                
+                const characterName = vuln.characters[0].split(" (")[0];
+                const characterSource = vuln.characters[0].match(/\((.*?)\)/)?.[1] || "";
+                const emoji = characterEmojis[characterName] || "🎭";
+                
+                // Create a dating profile bio from the character
+                const datingBio = getDatingBio(characterName);
+                
+                html += `<div class="swipe-card" data-index="${index}">`;
+                html += `<div class="card-content">`;
+                
+                // Simplified card header
+                html += `<div class="card-header">`;
+                html += `<span class="match-badge">${matchPercentage}% MATCH</span>`;
+                html += `</div>`;
+                
+                // Scrollable Area
+                html += `<div class="card-scroll-area" data-card-index="${index}">`;
+                
+                // Initial visible content - Dating Profile Style
+                html += `<div class="content-section">`;
+                html += `<div style="text-align: center; margin-bottom: 20px;">`;
+                html += `<div class="character-avatar">${emoji}</div>`;
+                html += `<h3 class="character-name">${characterName}</h3>`;
+                html += `<p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 5px;">${datingBio.subtitle}</p>`;
+                html += `<p style="font-size: 0.9em; opacity: 0.6;">📍 ${datingBio.location}</p>`;
+                html += `</div>`;
+                
+                html += `<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 20px;">`;
+                html += `<p style="font-style: italic; line-height: 1.6;">"${datingBio.bio}"</p>`;
+                html += `</div>`;
+                
+                html += `<div class="section">`;
+                html += `<p class="section-label"><span class="section-icon">💕</span> Why You'd Swipe Right:</p>`;
+                html += `<p class="section-text">${vuln.why}</p>`;
+                html += `</div>`;
+                html += `</div>`;
+                
+                // Hidden content - The Truth
+                html += `<div class="hidden-content">`;
+                html += `<div class="section">`;
+                html += `<p class="section-label"><span class="section-icon">🚩</span> THE TRUTH:</p>`;
+                html += `<div class="red-flags-container">`;
+                html += `<p class="section-text">`;
+                html += `${vuln.plotTwist} ${vuln.blindSpot}`;
+                html += `</p>`;
+                html += `</div>`;
+                html += `<p class="punchline-text" style="margin-top: 20px;">`;
+                html += `<em>"${vuln.punchline}"</em>`;
+                html += `</p>`;
+                html += `</div>`;
+                html += `</div>`;
+                
+                // Scroll indicator
+                html += `<div class="scroll-indicator-container">`;
+                html += `<div class="scroll-hint">Scroll for the truth</div>`;
+                html += `<div class="scroll-arrow">⬇️</div>`;
+                html += `</div>`;
+                
+                html += `</div>`; // End card-scroll-area
+                
+                html += `<div class="nope-label">NOPE</div>`;
+                html += `<div class="like-label">TOXIC</div>`;
+                html += `</div>`; // End card-content
+                html += `</div>`; // End swipe-card
+            });
+            
+            html += `</div>`; // End swipe container
+            
+            // Swipe actions
+            html += `<div class="swipe-actions">`;
+            html += `<button class="swipe-btn reject-btn" onclick="swipeCard('left')">❌</button>`;
+            html += `<button class="swipe-btn accept-btn" onclick="swipeCard('right')">😱</button>`;
+            html += `</div>`;
+            
+            html += `<div class="card-indicator">`;
+            html += `<span id="cardCounter">1</span> of ${vulnerabilities.length} toxic matches`;
+            html += `</div>`;
+            
+            // Protection Protocol
+            html += `<div class="protection-protocol">`;
+            html += `<h3 class="protocol-title">`;
+            html += `<span>🛡️</span>`;
+            html += `<span>YOUR PROTECTION PROTOCOL</span>`;
+            html += `</h3>`;
+            html += `<p style="line-height: 1.8; margin-bottom: 20px;">`;
+            html += `Now you understand your patterns. Here's how to protect yourself:`;
+            html += `</p>`;
+            html += getProtectionTips(archetype.name);
+            html += `<p style="margin-top: 20px; font-style: italic; text-align: center;">`;
+            html += `<strong>Remember:</strong> The traits that make you ${getPositiveSpin(archetype.name)} `;
+            html += `also make you vulnerable to ${getVulnerabilityType(archetype.name)}. Awareness is your armor.`;
+            html += `</p>`;
+            html += `</div>`;
+            
+            // Next Steps
+            html += `<div class="next-steps">`;
+            html += `<h3 class="next-steps-title">Recognize These Patterns in Someone You Know?</h3>`;
+            html += `<p style="max-width: 600px; margin: 0 auto 30px; line-height: 1.6;">`;
+            html += `Our AI Relationship Coach can analyze your specific situation and help you `;
+            html += `determine if you're living this story right now. Get personalized guidance `;
+            html += `based on your unique vulnerabilities.`;
+            html += `</p>`;
+            html += `<div class="action-buttons">`;
+            html += `<a href="https://6848340aa0a2233a0e0a63e9--partner-assessment-tool.netlify.app/" class="primary-cta">Talk to AI Coach</a>`;
+            html += `<a href="https://tally.so/r/w8gx25" class="secondary-cta">Share Your Results</a>`;
+            html += `</div>`;
+            html += `<p style="text-align: center; margin-top: 40px; font-style: italic; color: rgba(255, 255, 255, 0.7);">`;
+            html += `"The right person won't feel like a project, a mystery, or a challenge. They'll feel like home."`;
+            html += `</p>`;
+            html += `</div>`;
+            
+            html += `</div>`; // End result-container
+            
+            document.getElementById('result-content').innerHTML = html;
+            initializeSwipeCards();
+        }
+        let currentCardIndex = 0;
+        let isAnimating = false;
+
+        function initializeSwipeCards() {
+            attachSwipeToTopCard();
+        }
+
+        function attachSwipeToTopCard() {
+            const cards = document.querySelectorAll('.swipe-card');
+            if (cards.length === 0) return;
+            
+            // Only attach events to the LAST card (which is on top due to z-index)
+            const topCard = cards[cards.length - 1];
+            
+            let startX = null;
+            let currentX = null;
+            let isDragging = false;
+            
+            // Touch events
+            topCard.addEventListener('touchstart', handleStart, {passive: true});
+            topCard.addEventListener('touchmove', handleMove, {passive: true});
+            topCard.addEventListener('touchend', handleEnd);
+            
+            // Mouse events
+            topCard.addEventListener('mousedown', handleStart);
+            topCard.addEventListener('mousemove', handleMove);
+            topCard.addEventListener('mouseup', handleEnd);
+            topCard.addEventListener('mouseleave', handleEnd);
+            
+            function handleStart(e) {
+                if (isAnimating) return;
+                isDragging = true;
+                startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                topCard.classList.add('dragging');
+            }
+            
+            function handleMove(e) {
+                if (!startX || isAnimating || !isDragging) return;
+                
+                currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                const diffX = currentX - startX;
+                const rotate = diffX * 0.05;
+                
+                topCard.style.transform = `translateX(${diffX}px) rotate(${rotate}deg)`;
+                
+                // Show/hide labels
+                if (diffX > 80) {
+                    topCard.classList.add('tilting-right');
+                    topCard.classList.remove('tilting-left');
+                } else if (diffX < -80) {
+                    topCard.classList.add('tilting-left');
+                    topCard.classList.remove('tilting-right');
+                } else {
+                    topCard.classList.remove('tilting-left', 'tilting-right');
+                }
+            }
+            
+            function handleEnd(e) {
+                if (!startX || isAnimating || !isDragging) return;
+                
+                isDragging = false;
+                topCard.classList.remove('dragging');
+                
+                const diffX = currentX - startX || 0;
+                const threshold = 120;
+                
+                if (Math.abs(diffX) > threshold) {
+                    swipeCardWithReattach(diffX > 0 ? 'right' : 'left');
+                } else {
+                    // Snap back
+                    topCard.style.transition = 'transform 0.3s ease-out';
+                    topCard.style.transform = '';
+                    topCard.classList.remove('tilting-left', 'tilting-right');
+                    
+                    setTimeout(() => {
+                        topCard.style.transition = '';
+                    }, 300);
+                }
+                
+                startX = null;
+                currentX = null;
+            }
+        }
+
+        function swipeCardWithReattach(direction) {
+            if (isAnimating) return;
+            
+            const cards = document.querySelectorAll('.swipe-card');
+            const currentCard = cards[cards.length - 1]; // Top card
+            
+            if (!currentCard) {
+                showSwipeComplete();
+                return;
+            }
+            
+            isAnimating = true;
+            
+            // Clear transform and add animation
+            currentCard.style.transform = '';
+            currentCard.classList.add(direction === 'right' ? 'swiping-right' : 'swiping-left');
+            
+            setTimeout(() => {
+                currentCard.remove();
+                currentCardIndex++;
+                isAnimating = false;
+                
+                // Update counter
+                const totalCards = vulnerabilityMappings[calculateArchetype().name].length;
+                const counter = document.getElementById('cardCounter');
+                if (counter && currentCardIndex < totalCards) {
+                    counter.textContent = currentCardIndex + 1;
+                }
+                
+                // Check if more cards exist
+                const remainingCards = document.querySelectorAll('.swipe-card');
+                if (remainingCards.length > 0) {
+                    // Attach swipe to the new top card
+                    attachSwipeToTopCard();
+                } else {
+                    showSwipeComplete();
+                }
+            }, 600);
+        }
+
+// Update your button swipe function
+
+
+        function swipeCard(direction) {
+            swipeCardWithReattach(direction);
+            if (isAnimating) return;
+            
+            const cards = document.querySelectorAll('.swipe-card');
+            const currentCard = cards[cards.length - 1 - currentCardIndex];
+            
+            if (!currentCard) {
+                showSwipeComplete();
+                return;
+            }
+            
+            isAnimating = true;
+            
+            // Clear any transform from dragging
+            currentCard.style.transform = '';
+            currentCard.style.transition = '';
+            
+            // Add animation class
+            currentCard.classList.add(direction === 'right' ? 'swiping-right' : 'swiping-left');
+            
+            // Wait for animation to complete, then remove
+            setTimeout(() => {
+                currentCard.style.display = 'none'; // Hide first
+                currentCard.remove(); // Then remove from DOM
+                
+                currentCardIndex++;
+                isAnimating = false;
+                
+                // Update counter
+                const totalCards = vulnerabilityMappings[calculateArchetype().name].length;
+                const counter = document.getElementById('cardCounter');
+                if (counter && currentCardIndex < totalCards) {
+                    counter.textContent = currentCardIndex + 1;
+                }
+                
+                // Check if all cards are swiped
+                const remainingCards = document.querySelectorAll('.swipe-card');
+                if (remainingCards.length === 0) {
+                    showSwipeComplete();
+                }
+            }, 600); // Match this to animation duration (0.6s = 600ms)
+        }
+
+        function showSwipeComplete() {
+            const container = document.getElementById('swipeContainer');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px;">
+                    <h3 style="color: #2ecc71; font-size: 2em; margin-bottom: 20px;">✅ Swipe Complete!</h3>
+                    <p style="font-size: 1.2em; margin-bottom: 30px;">You've reviewed all your toxic attraction patterns.</p>
+                    <p style="opacity: 0.8;">Remember: Knowing these patterns is your first defense against them!</p>
+                </div>
+            `;
+        }
+        // Helper function to generate dating profile bios for characters
+        function getDatingBio(characterName) {
+            const bios = {
+                "Severus Snape": {
+                    subtitle: "Potions Master, 38",
+                    location: "Hogwarts",
+                    bio: "Seeking someone who appreciates intelligence and understands that love requires sacrifice. My past has shaped me, but I'm ready to protect the right person with everything I have."
+                },
+                "Ross Geller": {
+                    subtitle: "Paleontologist, 32",
+                    location: "New York City",
+                    bio: "Three-time divorcee looking for my lobster. I'm passionate about dinosaurs, committed to love, and ready to prove that the fourth time's the charm."
+                },
+                "Cersei Lannister": {
+                    subtitle: "Queen Regent, 35",
+                    location: "King's Landing",
+                    bio: "Looking for someone worthy of standing beside me. I value loyalty, ambition, and those who understand that power is meant to be wielded."
+                },
+                "Tom Ripley": {
+                    subtitle: "Art Enthusiast, 25",
+                    location: "Currently in Rome",
+                    bio: "I become everything you've ever wanted. Cultured, devoted, and willing to completely reshape myself for the right person. Your interests are my interests."
+                },
+                "BoJack Horseman": {
+                    subtitle: "Former TV Star, 50",
+                    location: "Hollywoo",
+                    bio: "Washed-up celebrity seeking someone who gets the real me. I'm complicated, sure, but underneath it all, I just need someone to tell me I'm good."
+                },
+                "Loki": {
+                    subtitle: "God of Mischief, Eternal",
+                    location: "Wherever chaos needs me",
+                    bio: "Misunderstood prince seeking someone who appreciates complexity. I may have tried to conquer Earth once, but I promise I've changed."
+                },
+                "Light Yagami": {
+                    subtitle: "Law Student, 23",
+                    location: "Tokyo",
+                    bio: "Top of my class, destined for greatness. Looking for someone who shares my vision of a perfect world and doesn't ask too many questions."
+                },
+                "An Sheng": {
+                    subtitle: "Writer & Wanderer, 28",
+                    location: "Always traveling",
+                    bio: "Free spirit with a complicated past. I write letters to the ones I love and disappear when things get too real. Looking for someone who understands that love means letting go."
+                },
+                "Wen Kexing": {
+                    subtitle: "Valley Master, Age Unknown",
+                    location: "Ghost Valley",
+                    bio: "Charming rogue with a mysterious past. I collect beautiful things and protect what's mine. Loyalty is everything, betrayal is unforgivable."
+                },
+                "Frank Gallagher": {
+                    subtitle: "Professional Philosopher, 48",
+                    location: "Chicago",
+                    bio: "Father of six, lover of life. I see the world differently than most - every day is an adventure when you're with me. Seeking someone who appreciates spontaneity."
+                },
+                "Tony Stark": {
+                    subtitle: "Genius Billionaire, 45",
+                    location: "Malibu",
+                    bio: "Genius, billionaire, playboy, philanthropist. I've saved the world a few times, but I'm still looking for someone to save me from myself."
+                },
+                "Damon Salvatore": {
+                    subtitle: "Eternal Bad Boy, 170+",
+                    location: "Mystic Falls",
+                    bio: "Immortal with a heart that still beats for the right person. I've done terrible things for love, and I'd do them again. Eternity is boring without passion."
+                },
+                "Klaus Mikaelson": {
+                    subtitle: "Original Hybrid, 1000+",
+                    location: "New Orleans",
+                    bio: "Artist, revolutionary, family man. I've lived a thousand years waiting for someone who sees beyond the monster. Together, we could rule everything."
+                },
+                "Rorschach": {
+                    subtitle: "Vigilante, 35",
+                    location: "New York City",
+                    bio: "The world is black and white. No compromises. Looking for someone who understands that justice isn't pretty and truth isn't comfortable."
+                },
+                "Captain Holt": {
+                    subtitle: "Police Captain, 55",
+                    location: "Brooklyn",
+                    bio: "Discipline is the foundation of success. Seeking someone who appreciates structure, follows protocols, and understands that emotions should be regulated."
+                },
+                // Add more as needed
+                "Default": {
+                    subtitle: "Mysterious Figure",
+                    location: "Unknown",
+                    bio: "There's something magnetic about me that you can't quite place. I promise you've never met anyone like me before."
+                }
+            };
+            
+            return bios[characterName] || bios["Default"];
+        }
+
+        // Helper function for archetype-specific protection tips
+        function getProtectionTips(archetypeName) {
+            const tips = {
+                "Intellectual": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with those who claim to be misunderstood geniuses</li>
+                        <li>✓ Notice when you feel intellectually challenged but emotionally neglected</li>
+                        <li>✓ Your danger phrase: "But they're so brilliant..."</li>
+                        <li>✓ Red flag: Anyone who makes you feel stupid for having feelings</li>
+                    </ul>
+                `,
+                "Achiever": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with those who promise they'll change</li>
+                        <li>✓ Notice when you feel exhausted from trying to "fix" someone</li>
+                        <li>✓ Your danger phrase: "I can help them reach their potential..."</li>
+                        <li>✓ Red flag: Anyone who makes their problems your projects</li>
+                    </ul>
+                `,
+                "Leader": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with those who seem like equals</li>
+                        <li>✓ Notice when you feel your power being subtly undermined</li>
+                        <li>✓ Your danger phrase: "Finally, someone on my level..."</li>
+                        <li>✓ Red flag: Anyone who competes with you instead of complementing you</li>
+                    </ul>
+                `,
+                "Explorer": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with exciting but unstable people</li>
+                        <li>✓ Notice when chaos stops feeling like adventure and starts feeling like crisis</li>
+                        <li>✓ Your danger phrase: "But they make life so interesting..."</li>
+                        <li>✓ Red flag: Anyone whose drama becomes your daily reality</li>
+                    </ul>
+                `,
+                "Rebel": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with other "misunderstood" souls</li>
+                        <li>✓ Notice when rebellion becomes destruction</li>
+                        <li>✓ Your danger phrase: "They just get my need for freedom..."</li>
+                        <li>✓ Red flag: Anyone who encourages your worst impulses</li>
+                    </ul>
+                `,
+                "Peacemaker": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with those who need constant soothing</li>
+                        <li>✓ Notice when keeping peace means losing yourself</li>
+                        <li>✓ Your danger phrase: "I just want everyone to be happy..."</li>
+                        <li>✓ Red flag: Anyone who weaponizes your kindness</li>
+                    </ul>
+                `,
+                "Dreamer": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with grand romantic gestures</li>
+                        <li>✓ Notice when fantasy overshadows reality</li>
+                        <li>✓ Your danger phrase: "It's just like a fairy tale..."</li>
+                        <li>✓ Red flag: Anyone who love-bombs you with impossible promises</li>
+                    </ul>
+                `,
+                "Caregiver": `
+                    <ul style="text-align: left; line-height: 1.8; margin-left: 20px;">
+                        <li>✓ Trust actions over words - especially with those who always need rescue</li>
+                        <li>✓ Notice when caring becomes enabling</li>
+                        <li>✓ Your danger phrase: "They need me..."</li>
+                        <li>✓ Red flag: Anyone who makes you responsible for their happiness</li>
+                    </ul>
+                `
+            };
+            
+            return tips[archetypeName] || "";
+        }
+
+        // Helper function to frame traits positively
+        function getPositiveSpin(archetypeName) {
+            const spins = {
+                "Intellectual": "brilliant and analytical",
+                "Achiever": "driven and accomplished",
+                "Leader": "confident and decisive",
+                "Explorer": "adventurous and spontaneous",
+                "Rebel": "independent and authentic",
+                "Peacemaker": "harmonious and diplomatic",
+                "Dreamer": "creative and idealistic",
+                "Caregiver": "compassionate and nurturing"
+            };
+            
+            return spins[archetypeName] || "unique";
+        }
+
+        // Helper function to describe vulnerability type
+        function getVulnerabilityType(archetypeName) {
+            const vulnerabilities = {
+                "Intellectual": "those who exploit your need to understand",
+                "Achiever": "those who become your projects",
+                "Leader": "those who secretly compete with your power",
+                "Explorer": "those who mistake chaos for excitement",
+                "Rebel": "those who weaponize your independence",
+                "Peacemaker": "those who abuse your kindness",
+                "Dreamer": "those who sell you beautiful lies",
+                "Caregiver": "those who drain your compassion"
+            };
+            
+            return vulnerabilities[archetypeName] || "manipulation";
+        }
+ 
+        
+        // Find this section in showResults():
+
+// Show scores continues here...
+        // Restart quiz function
+        function restartQuiz() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('intro-screen').style.display = 'block';
+        }
+    </script>
